@@ -27,8 +27,8 @@ public class PoolDepthBehaviour : MonoBehaviour {
             this.layers.transform.DOLocalMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);
             this.layerHealth = this.poolDepth;
         }
-        this.transform.DOComplete();
-        this.transform.DOPunchScale(this.transform.position + Vector3.one * .05f, .5f);
+        //this.transform.DOComplete();
+        //this.transform.DOPunchScale(this.transform.position + Vector3.one * .05f, .5f);
     }
 
     private int layerHealth;
