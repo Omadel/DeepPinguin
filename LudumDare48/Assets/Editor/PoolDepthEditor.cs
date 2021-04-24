@@ -29,9 +29,10 @@ public class PoolDepthEditor : Editor {
         if(this.layerAmount.intValue != currentLayerAmount) {
             GameObject layerPrefab = Resources.Load("Prefabs/Layer") as GameObject;
             if(this.layerAmount.intValue > currentLayerAmount) {
-                GameObject.Instantiate(layerPrefab, layersGo.transform, false);
+                GameObject layer = GameObject.Instantiate(layerPrefab, layersGo.transform, false);
+                layer.transform.localPosition = new Vector3(0, -currentLayerAmount, 0);
             } else {
-
+                GameObject.DestroyImmediate(layersGo.transform.GetChild(currentLayerAmount - 1).gameObject);
             }
         }
     }
