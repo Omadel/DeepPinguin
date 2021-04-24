@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5196221504756682652}
   - component: {fileID: 5196221504756682651}
   - component: {fileID: 5196221504756682650}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,9 +60,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 15
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 8.27
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
