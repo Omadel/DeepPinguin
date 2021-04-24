@@ -16,20 +16,24 @@ public class PoolDepthBehaviour : MonoBehaviour {
     [SerializeField] private Ease digEase = Ease.OutQuad;
 
     private void Start() {
+        this.impulseSource = GetComponent<Cinemachine.CinemachineImpulseSource>();
         this.layerHealth = this.poolDepth;
     }
 
     public void Dig(int damage) {
         this.layerHealth -= damage;
+        this.impulseSource.GenerateImpulse();
         if(this.layerHealth <= 0) {
             this.poolDepth++;
             this.depth.transform.DOScaleY(Mathf.Max(.001f, this.poolDepth), this.digDuration).SetEase(this.digEase);
             this.layers.transform.DOLocalMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);
             this.layerHealth = this.poolDepth;
+            GameManager.Instance.Score.text = this.poolDepth.ToString();
         }
         //this.transform.DOComplete();
         //this.transform.DOPunchScale(this.transform.position + Vector3.one * .05f, .5f);
     }
 
     private int layerHealth;
+    private Cinemachine.CinemachineImpulseSource impulseSource;
 }
