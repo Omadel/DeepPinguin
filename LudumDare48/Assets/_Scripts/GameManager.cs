@@ -6,10 +6,11 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
     public PoolDepthBehaviour Pool { get => this.pool; }
     public TextMeshProUGUI Score { get => this.scoreText; }
+    public TextMeshProUGUI Money { get => this.moneyText; }
     public Slider BreathBar { get => this.breathBar; }
 
     [SerializeField] private PoolDepthBehaviour pool = null;
-    [SerializeField] private TMPro.TextMeshProUGUI scoreText = null;
+    [SerializeField] private TMPro.TextMeshProUGUI scoreText = null, moneyText = null;
     [SerializeField] private Slider breathBar = null;
 
     private void Awake() {

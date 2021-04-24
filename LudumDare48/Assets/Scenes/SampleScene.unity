@@ -1283,6 +1283,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362452079}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &363383608 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1333670260539944719, guid: 2cc6dccba79dea248a23f49eddc02251,
+    type: 3}
+  m_PrefabInstance: {fileID: 1458551168683489360}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &415556282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,54 +2710,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764540884}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &854905462 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1458551167291686158, guid: 2cc6dccba79dea248a23f49eddc02251,
-    type: 3}
-  m_PrefabInstance: {fileID: 1458551168683489360}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &854905465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854905462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ImpulseDefinition:
-    m_ImpulseChannel: 1
-    m_RawSignal: {fileID: 11400000, guid: 6d96a8f7e95160d4892c9783b92bef67, type: 2}
-    m_AmplitudeGain: 1
-    m_FrequencyGain: 1
-    m_RepeatMode: 0
-    m_Randomize: 1
-    m_TimeEnvelope:
-      m_AttackShape:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      m_DecayShape:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      m_AttackTime: 0
-      m_SustainTime: 0.2
-      m_DecayTime: 0.7
-      m_ScaleWithImpact: 1
-      m_HoldForever: 0
-    m_ImpactRadius: 100
-    m_DirectionMode: 0
-    m_DissipationMode: 2
-    m_DissipationDistance: 1000
-    m_PropagationSpeed: 343
 --- !u!1 &886020617
 GameObject:
   m_ObjectHideFlags: 0
@@ -5694,7 +5658,7 @@ MonoBehaviour:
   m_FollowOffset: {x: 30, y: 25, z: -30}
   m_XDamping: 20
   m_YDamping: 1
-  m_ZDamping: 20
+  m_ZDamping: 4
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -6392,6 +6356,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5705398903179305178, guid: 2cc6dccba79dea248a23f49eddc02251,
+        type: 3}
+      propertyPath: moneyText
+      value: 
+      objectReference: {fileID: 363383608}
     - target: {fileID: 6591843905325369719, guid: 2cc6dccba79dea248a23f49eddc02251,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -6420,6 +6389,11 @@ PrefabInstance:
     - target: {fileID: 7846855073064538507, guid: 2cc6dccba79dea248a23f49eddc02251,
         type: 3}
       propertyPath: m_MaxValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7846855073064538507, guid: 2cc6dccba79dea248a23f49eddc02251,
+        type: 3}
+      propertyPath: m_WholeNumbers
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7955473954918227949, guid: 2cc6dccba79dea248a23f49eddc02251,
@@ -6555,6 +6529,16 @@ PrefabInstance:
         type: 3}
       propertyPath: money
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4397769812434276111, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: breathTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4397769812434276111, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: digDamage
+      value: 287
       objectReference: {fileID: 0}
     - target: {fileID: 6507858789150693450, guid: 1457f2ba1b0e32c4abb25771010828f2,
         type: 3}

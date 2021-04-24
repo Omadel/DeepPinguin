@@ -14,23 +14,42 @@ public class PlayerBehaviour : MonoBehaviour {
     private IEnumerator TimerBreath(float breathTime = 20f) {
         float timeLeft = breathTime;
         GameManager.Instance.BreathBar.maxValue = timeLeft;
+        GameManager.Instance.BreathBar.value = timeLeft;
         while(timeLeft >= 0) {
-            print(timeLeft);
+            yield return new WaitForSecondsRealtime(1);
             GameManager.Instance.BreathBar.value = timeLeft;
-            timeLeft -= Time.deltaTime;
-            yield return null;
+            timeLeft--;
         }
-        Debug.Log("End of timer");
+        this.state = PlayerState.Show;
+        this.transform.DOMoveY(0, 2f).OnComplete(ActivateShow);
     }
 
     private void Update() {
-        if(Input.GetMouseButtonDown(0) || Input.touchCount > 0) {
-            PoolDepthBehaviour pool = GameManager.Instance.Pool;
-            pool.Dig(this.digDamage);
-            this.transform.DOMoveY(-pool.Depth, pool.DigDuration).SetEase(pool.DigEase);
-        }
-        if(Input.GetKeyDown(KeyCode.Space) || Input.touchCount >= 3) {
-            this.transform.DOMoveY(0, 2f);
+        if(this.state == PlayerState.Dig) {
+            if(Input.GetMouseButtonDown(0) || Input.touchCount > 0) {
+                PoolDepthBehaviour pool = GameManager.Instance.Pool;
+                pool.Dig(this.digDamage);
+                this.transform.DOMoveY(-pool.Depth, pool.DigDuration).SetEase(pool.DigEase);
+            }
         }
     }
+
+    private void ActivateShow() {
+        StartCoroutine(SetScore(GameManager.Instance.Pool.Depth));
+    }
+
+    private IEnumerator SetScore(int amount) {
+        int score = int.Parse(GameManager.Instance.Money.text);
+        while(score < amount) {
+            yield return new WaitForSecondsRealtime(.1f);
+            print(score);
+            this.money++;
+            score++;
+            GameManager.Instance.Money.text = this.money.ToString();
+        }
+    }
+
+    private enum PlayerState { Swim, Dig, Show }
+
+    private PlayerState state = PlayerState.Dig;
 }
