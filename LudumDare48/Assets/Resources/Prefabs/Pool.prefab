@@ -206,6 +206,8 @@ MonoBehaviour:
   layerAmount: 1
   depth: {fileID: 7669165323601184711}
   layers: {fileID: 7669165323839578102}
+  digDuration: 0.5
+  digEase: 6
 --- !u!1 &7669165324412859852
 GameObject:
   m_ObjectHideFlags: 0

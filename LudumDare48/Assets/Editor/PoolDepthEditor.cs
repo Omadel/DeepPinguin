@@ -18,6 +18,7 @@ public class PoolDepthEditor : Editor {
     private void OnEnable() {
         Init();
     }
+
     private void OnSceneGUI() {
         HandlePoolDepth();
         HandleLayerAmount();
