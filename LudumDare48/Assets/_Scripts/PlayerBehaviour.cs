@@ -42,7 +42,6 @@ public class PlayerBehaviour : MonoBehaviour {
         int score = int.Parse(GameManager.Instance.Money.text);
         while(score < amount) {
             yield return new WaitForSecondsRealtime(.1f);
-            print(score);
             this.money++;
             score++;
             GameManager.Instance.Money.text = this.money.ToString();
