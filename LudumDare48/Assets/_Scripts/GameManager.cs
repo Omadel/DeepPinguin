@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
     public GameObject Store { get => this.store; }
     public GameObject Digging { get => this.digging; }
     public Button ClickableArea { get => this.clickableArea; }
+    public GameObject WaterPoolGo { get => waterPoolGo; }
+
     [SerializeField] private PoolDepthBehaviour pool = null;
     [SerializeField] private PlayerBehaviour player = null;
 
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject stats = null;
     [SerializeField] private GameObject store = null;
     [SerializeField] private GameObject digging = null;
+    [SerializeField] private GameObject waterPoolGo = null;
 
     private void Awake() {
         if(GameManager.Instance == null) {

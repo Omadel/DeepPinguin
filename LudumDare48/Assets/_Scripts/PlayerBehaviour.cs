@@ -45,16 +45,20 @@ public class PlayerBehaviour : MonoBehaviour {
     public void Dig() {
         PoolDepthBehaviour pool = this.gameManager.Pool;
         if(pool.Dig(this.digDamage)) {
+            FindObjectOfType<AudioManager>().Play("Dig");
+            gameManager.WaterPoolGo.SetActive(true);
             this.dugLayers++;
         }
     }
 
     private IEnumerator SetScore(int amount) {
         while(this.dugLayers > 0) {
+            FindObjectOfType<AudioManager>().Play("calcul");
             yield return new WaitForSecondsRealtime(.1f);
             this.dugLayers--;
             AddMoney(1);
         }
+        FindObjectOfType<AudioManager>().Stop("calcul");
         SetState(PlayerState.Buy);
     }
 

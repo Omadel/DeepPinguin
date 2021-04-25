@@ -55,6 +55,7 @@ MonoBehaviour:
   stats: {fileID: 99281148312848502}
   store: {fileID: 8319333802212423389}
   digging: {fileID: 7087056457597198205}
+  waterPoolGo: {fileID: 318198699665126349}
 --- !u!1001 &3790174565963871952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -606,3 +607,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f822deeec403f8e428cf7900adcd1639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &318198699665126349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8807336343429065243, guid: 811258b9d0677974f8c74a25f2fb8a47,
+    type: 3}
+  m_PrefabInstance: {fileID: 9102770685465188822}
+  m_PrefabAsset: {fileID: 0}
