@@ -10,6 +10,9 @@ public class SpawnMeshEffect : MonoBehaviour {
     [SerializeField] private GameObject fxPrefab = null;
 
     private void OnEnable() {
+        foreach(Transform child in this.transform) {
+            child.localScale = Vector3.zero;
+        }
         StartCoroutine(DelayedSpawn(this.animationDelay));
     }
 
