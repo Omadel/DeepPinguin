@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d362181aec5158c45ad0495a96f694d6, type: 3}
   m_Name: Add5sBreathTime
   m_EditorClassIdentifier: 
-  name: +5 Breath time
+  name: +1
   bonusType: 0
   amount: 5
   cost: 2

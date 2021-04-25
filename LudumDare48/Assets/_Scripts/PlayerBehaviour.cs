@@ -14,8 +14,8 @@ public class PlayerBehaviour : MonoBehaviour {
     [SerializeField] [Min(0)] private int money = 0;
     [SerializeField] private WalkingPath walkingPath = null;
     [Header("Walk")]
-    [SerializeField] private float walkSpeed = 6f;
-    [SerializeField] private Ease walkingEase = Ease.OutQuad;
+    [SerializeField] private float pathDuration = 15f;
+    [SerializeField] private PathType pathEase = PathType.CatmullRom;
 
     [Header("Swim")]
     [SerializeField] private int breathTime = 20;
@@ -39,11 +39,14 @@ public class PlayerBehaviour : MonoBehaviour {
 
     private void GainMoney() {
         StartCoroutine(SetScore(this.gameManager.Pool.Depth));
-        Sequence sequence = DOTween.Sequence();
-        for(int i = 1; i < this.walkingPath.Waypoints.Length; i++) {
-            float duration = Vector3.Distance(this.transform.position, this.walkingPath.Waypoints[i]) / this.walkSpeed;
-            sequence.Append(this.transform.DOMove(this.walkingPath.Waypoints[i], duration).SetEase(this.walkingEase));
-        }
+        this.transform.DOPath(this.walkingPath.Waypoints, this.pathDuration, this.pathEase, PathMode.Sidescroller2D, 10, Color.blue)
+            .OnWaypointChange((int index) => {
+                Vector3 towards = new Vector3(this.walkingPath.Waypoints[index + 1].x, this.walkingPath.Waypoints[index].y, this.walkingPath.Waypoints[index + 1].z);
+                this.transform.DOLookAt(towards,
+                .4f);
+                Debug.DrawLine(this.walkingPath.Waypoints[index], towards, Color.red, 1f);
+            }
+        );
     }
 
     private void Update() {
@@ -56,6 +59,10 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     public void Dig() {
+        if(!this.hasDug) {
+            StartCoroutine(TimerBreath(this.breathTime));
+            this.hasDug = true;
+        }
         PoolDepthBehaviour pool = this.gameManager.Pool;
         if(pool.Dig(this.digDamage)) {
             FindObjectOfType<AudioManager>().Play("Dig");
@@ -101,6 +108,7 @@ public class PlayerBehaviour : MonoBehaviour {
                 this.gameManager.UIPanDown(this.gameManager.Digging);
                 this.gameManager.ClickableArea.onClick.RemoveAllListeners();
                 this.gameManager.ClickableArea.interactable = false;
+                this.hasDug = false;
                 break;
             case PlayerState.GainMoney:
                 break;
@@ -121,7 +129,6 @@ public class PlayerBehaviour : MonoBehaviour {
                 this.gameManager.UIPanUP(this.gameManager.Digging);
                 this.gameManager.ClickableArea.onClick.AddListener(() => Dig());
                 this.gameManager.ClickableArea.interactable = true;
-                StartCoroutine(TimerBreath(this.breathTime));
                 break;
             case PlayerState.GainMoney:
                 this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(GainMoney);
@@ -139,6 +146,7 @@ public class PlayerBehaviour : MonoBehaviour {
     private SwimBehaviour swimBehaviour = null;
     private GameManager gameManager = null;
     private int dugLayers = 0;
+    private bool hasDug = false;
 
 }
 public enum PlayerState { Idle, Swim, Dig, GainMoney, Buy }
