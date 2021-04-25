@@ -20,5 +20,8 @@ public class WalkingPathEditor : Editor {
     private void OnSceneGUI() {
         Handles.DrawAAPolyLine(this.waypoints);
     }
+    public override void OnInspectorGUI() {
+        base.OnInspectorGUI();
+    }
 
 }
