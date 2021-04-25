@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
     public GameObject Store { get => this.store; }
     public GameObject Digging { get => this.digging; }
     public Button ClickableArea { get => this.clickableArea; }
-    public GameObject WaterPoolGo { get => waterPoolGo; }
+    public GameObject WaterPoolGo { get => this.waterPoolGo; }
 
     [SerializeField] private PoolDepthBehaviour pool = null;
     [SerializeField] private PlayerBehaviour player = null;
@@ -37,11 +37,14 @@ public class GameManager : MonoBehaviour {
         } else {
             GameObject.Destroy(this.gameObject);
         }
+        Application.targetFrameRate = 60;
 
+#if UNITY_EDITOR
         if(this.player == null) {
             Debug.LogError("Player is not specified");
             Application.Quit();
         }
+#endif
     }
 
     public void Dig() => this.player.Dig();
