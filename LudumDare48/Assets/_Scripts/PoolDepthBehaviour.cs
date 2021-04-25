@@ -10,6 +10,7 @@ public class PoolDepthBehaviour : MonoBehaviour {
     [SerializeField] [Min(0)] private int poolDepth = 1;
     [SerializeField] [Range(0, 20)] private int layerAmount = 1;
     [SerializeField] private GameObject depth = null, layers = null;
+    [SerializeField] private Material[] layerMaterials = new Material[20];
 
     [Header("Dig Animation Parameters")]
     [SerializeField] private float digDuration = .5f;
@@ -33,6 +34,10 @@ public class PoolDepthBehaviour : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public Material GetMaterial(int index) {
+        return this.layerMaterials[index];
     }
 
     private int layerHealth;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnMeshEffect : MonoBehaviour {
     [SerializeField] private float animationDelay = .01f;
     [SerializeField] private float animationTimer = .2f;
-    [SerializeField] private AnimationCurve animationCurve;
+    [SerializeField] private AnimationCurve animationCurve = null;
     [SerializeField] private Ease animationEase = Ease.OutQuad;
     [SerializeField] private GameObject fxPrefab = null;
 

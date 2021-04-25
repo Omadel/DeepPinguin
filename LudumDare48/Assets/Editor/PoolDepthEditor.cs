@@ -32,6 +32,12 @@ public class PoolDepthEditor : Editor {
             if(this.layerAmount.intValue > currentLayerAmount) {
                 GameObject layer = GameObject.Instantiate(layerPrefab, layersGo.transform, false);
                 layer.transform.localPosition = new Vector3(0, -currentLayerAmount, 0);
+                PoolDepthBehaviour pool = (PoolDepthBehaviour)this.target;
+                Debug.Log(pool.GetMaterial(currentLayerAmount));
+                foreach(Transform quad in layer.transform) {
+                    Debug.Log(quad.name);
+                    quad.GetComponent<MeshRenderer>().material = pool.GetMaterial(currentLayerAmount);
+                }
             } else {
                 GameObject.DestroyImmediate(layersGo.transform.GetChild(currentLayerAmount - 1).gameObject);
             }
