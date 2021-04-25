@@ -20,7 +20,7 @@ public class PoolDepthBehaviour : MonoBehaviour {
         this.layerHealth = this.poolDepth;
     }
 
-    public void Dig(int damage) {
+    public bool Dig(int damage) {
         this.layerHealth -= damage;
         this.impulseSource.GenerateImpulse();
         if(this.layerHealth <= 0) {
@@ -29,9 +29,12 @@ public class PoolDepthBehaviour : MonoBehaviour {
             this.layers.transform.DOLocalMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);
             this.layerHealth = this.poolDepth;
             GameManager.Instance.Score.text = this.poolDepth.ToString();
+            GameManager.Instance.Player.transform.DOMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);
+            return true;
         }
         //this.transform.DOComplete();
         //this.transform.DOPunchScale(this.transform.position + Vector3.one * .05f, .5f);
+        return false;
     }
 
     private int layerHealth;

@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolDepth: 0
-  layerAmount: 1
+  layerAmount: 20
   depth: {fileID: 7669165323601184711}
   layers: {fileID: 7669165323839578102}
   digDuration: 0.5
