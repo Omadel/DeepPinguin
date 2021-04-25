@@ -26,6 +26,7 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     private IEnumerator TimerBreath(float breathTime = 20f) {
+        this.gameManager.UIPanUP(this.gameManager.Digging);
         float timeLeft = breathTime;
         this.gameManager.BreathBar.maxValue = timeLeft;
         this.gameManager.BreathBar.value = timeLeft;
@@ -54,7 +55,9 @@ public class PlayerBehaviour : MonoBehaviour {
             SetState(PlayerState.Dig);
         }
         if(this.state == PlayerState.Idle) {
-
+            if(Input.GetMouseButtonDown(0) || Input.touchCount > 0) {
+                SetState(PlayerState.Swim);
+            }
         }
     }
 
@@ -126,7 +129,6 @@ public class PlayerBehaviour : MonoBehaviour {
                 this.swimBehaviour.gameObject.SetActive(true);
                 break;
             case PlayerState.Dig:
-                this.gameManager.UIPanUP(this.gameManager.Digging);
                 this.gameManager.ClickableArea.onClick.AddListener(() => Dig());
                 this.gameManager.ClickableArea.interactable = true;
                 break;
