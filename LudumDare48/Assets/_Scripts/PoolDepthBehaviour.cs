@@ -32,8 +32,6 @@ public class PoolDepthBehaviour : MonoBehaviour {
             GameManager.Instance.Player.transform.DOMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);
             return true;
         }
-        //this.transform.DOComplete();
-        //this.transform.DOPunchScale(this.transform.position + Vector3.one * .05f, .5f);
         return false;
     }
 
