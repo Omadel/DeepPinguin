@@ -125,4 +125,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   digDamage: 1
   money: 0
-  breathTime: 20
+  breathTime: 5
