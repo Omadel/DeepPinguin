@@ -44,7 +44,7 @@ public class PlayerBehaviour : MonoBehaviour {
             .OnWaypointChange((int index) => {
                 Vector3 towards = new Vector3(this.walkingPath.Waypoints[index + 1].x, this.walkingPath.Waypoints[index].y, this.walkingPath.Waypoints[index + 1].z);
                 this.transform.DOLookAt(towards,
-                .4f);
+                .4f).OnComplete(() => SetState(PlayerState.Idle));
                 Debug.DrawLine(this.walkingPath.Waypoints[index], towards, Color.red, 1f);
             }
         );
