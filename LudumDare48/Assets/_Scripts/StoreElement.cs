@@ -4,12 +4,12 @@ public class StoreElement : MonoBehaviour {
 
     [SerializeField] private StoreElementStats stats = null;
 
-    // Start is called before the first frame update
     private void Start() {
-        GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"Buy : {this.stats.Name}";
+        TMPro.TextMeshProUGUI[] texts = GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+        texts[0].text = this.stats.Name;
+        texts[1].text = this.stats.Cost.ToString();
     }
 
-    // Update is called once per frame
     public void Buy() {
         GameManager.Instance.Buy(this.stats);
     }

@@ -16,20 +16,19 @@ public class GameManager : MonoBehaviour {
     public GameObject Digging { get => this.digging; }
     public Button ClickableArea { get => this.clickableArea; }
     public GameObject WaterPoolGo { get => this.waterPoolGo; }
+    public SwimBehaviour SwimBehaviour { get => this.swimBehaviour; }
 
     [SerializeField] private PoolDepthBehaviour pool = null;
     [SerializeField] private PlayerBehaviour player = null;
 
     [Header("UI")]
     [SerializeField] private Button clickableArea = null;
+    [SerializeField] private SwimBehaviour swimBehaviour = null;
+    [Header("TextFields"), Space(-10)]
     [SerializeField] private TextMeshProUGUI scoreText = null;
-    [SerializeField] private TextMeshProUGUI moneyText = null;
-    [SerializeField] private TextMeshProUGUI digDmgText = null;
+    [SerializeField] private TextMeshProUGUI moneyText = null, digDmgText = null;
     [SerializeField] private Slider breathBar = null;
-    [SerializeField] private GameObject stats = null;
-    [SerializeField] private GameObject store = null;
-    [SerializeField] private GameObject digging = null;
-    [SerializeField] private GameObject waterPoolGo = null;
+    [SerializeField] private GameObject stats = null, store = null, digging = null, waterPoolGo = null;
 
     private void Awake() {
         if(GameManager.Instance == null) {

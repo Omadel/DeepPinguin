@@ -7,12 +7,17 @@ public class PlayerBehaviour : MonoBehaviour {
     public int DigDamage { get => this.digDamage; set => this.digDamage = value; }
     public int Money { get => this.money; set => this.money = value; }
     public int BreathTime { get => this.breathTime; set => this.breathTime = value; }
+    public float SwimSpeed { get => this.swimSpeed; }
+    public float SideSwimSpeed { get => this.sideSwimSpeed; }
 
     [SerializeField] private int digDamage = 1;
     [SerializeField] [Min(0)] private int money = 0;
+    [Header("Swim")]
     [SerializeField] private int breathTime = 20;
+    [SerializeField] private float swimSpeed = 6f, sideSwimSpeed = 8f;
     private void Start() {
         this.gameManager = GameManager.Instance;
+        this.swimBehaviour = this.gameManager.SwimBehaviour;
     }
 
     private IEnumerator TimerBreath(float breathTime = 20f) {
@@ -32,10 +37,8 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     private void Update() {
-        if(this.state == PlayerState.Dig) {
-            //if(Input.GetMouseButtonDown(0) || Input.touchCount > 0) {
-            //    Dig();
-            //}
+        if(this.state == PlayerState.Swim && this.transform.position.y <= -this.gameManager.Pool.Depth) {
+            SetState(PlayerState.Dig);
         }
         if(this.state == PlayerState.Idle) {
 
@@ -46,7 +49,7 @@ public class PlayerBehaviour : MonoBehaviour {
         PoolDepthBehaviour pool = this.gameManager.Pool;
         if(pool.Dig(this.digDamage)) {
             FindObjectOfType<AudioManager>().Play("Dig");
-            gameManager.WaterPoolGo.SetActive(true);
+            this.gameManager.WaterPoolGo.SetActive(true);
             this.dugLayers++;
         }
     }
@@ -82,6 +85,7 @@ public class PlayerBehaviour : MonoBehaviour {
             case PlayerState.Idle:
                 break;
             case PlayerState.Swim:
+                this.swimBehaviour.gameObject.SetActive(false);
                 break;
             case PlayerState.Dig:
                 this.gameManager.UIPanDown(this.gameManager.Digging);
@@ -101,6 +105,7 @@ public class PlayerBehaviour : MonoBehaviour {
             case PlayerState.Idle:
                 break;
             case PlayerState.Swim:
+                this.swimBehaviour.gameObject.SetActive(true);
                 break;
             case PlayerState.Dig:
                 this.gameManager.UIPanUP(this.gameManager.Digging);
@@ -109,7 +114,7 @@ public class PlayerBehaviour : MonoBehaviour {
                 StartCoroutine(TimerBreath(this.breathTime));
                 break;
             case PlayerState.GainMoney:
-                this.transform.DOMoveY(0, 2f).OnComplete(GainMoney);
+                this.transform.DOMove(new Vector3(7.4f, 0f, -1), 2f).OnComplete(GainMoney);
                 break;
             case PlayerState.Buy:
                 this.gameManager.UIPanUP(this.gameManager.Store);
@@ -121,6 +126,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
 
     private PlayerState state = PlayerState.Idle;
+    private SwimBehaviour swimBehaviour = null;
     private GameManager gameManager = null;
     private int dugLayers = 0;
 
