@@ -12,6 +12,11 @@ public class PlayerBehaviour : MonoBehaviour {
 
     [SerializeField] private int digDamage = 1;
     [SerializeField] [Min(0)] private int money = 0;
+    [SerializeField] private WalkingPath walkingPath = null;
+    [Header("Walk")]
+    [SerializeField] private float walkSpeed = 6f;
+    [SerializeField] private Ease walkingEase = Ease.OutQuad;
+
     [Header("Swim")]
     [SerializeField] private int breathTime = 20;
     [SerializeField] private float swimSpeed = 6f, sideSwimSpeed = 8f;
@@ -34,6 +39,11 @@ public class PlayerBehaviour : MonoBehaviour {
 
     private void GainMoney() {
         StartCoroutine(SetScore(this.gameManager.Pool.Depth));
+        Sequence sequence = DOTween.Sequence();
+        for(int i = 1; i < this.walkingPath.Waypoints.Length; i++) {
+            float duration = Vector3.Distance(this.transform.position, this.walkingPath.Waypoints[i]) / this.walkSpeed;
+            sequence.Append(this.transform.DOMove(this.walkingPath.Waypoints[i], duration).SetEase(this.walkingEase));
+        }
     }
 
     private void Update() {
@@ -114,7 +124,7 @@ public class PlayerBehaviour : MonoBehaviour {
                 StartCoroutine(TimerBreath(this.breathTime));
                 break;
             case PlayerState.GainMoney:
-                this.transform.DOMove(new Vector3(7.4f, 0f, -1), 2f).OnComplete(GainMoney);
+                this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(GainMoney);
                 break;
             case PlayerState.Buy:
                 this.gameManager.UIPanUP(this.gameManager.Store);
