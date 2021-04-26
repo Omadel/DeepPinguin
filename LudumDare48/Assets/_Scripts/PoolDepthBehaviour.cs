@@ -13,7 +13,7 @@ public class PoolDepthBehaviour : MonoBehaviour {
     [SerializeField] private Material[] layerMaterials = new Material[20];
     [SerializeField] private Color layerHurtColor = Color.red;
     [SerializeField] private GameObject fxPrefab = null;
-   
+
 
     [Header("Dig Animation Parameters")]
     [SerializeField] private float digDuration = .5f;
@@ -42,7 +42,7 @@ public class PoolDepthBehaviour : MonoBehaviour {
         this.impulseSource.GenerateImpulse();
         if(this.layerHealth <= 0) {
             FindObjectOfType<AudioManager>().Play("Break");
-            Instantiate(fxPrefab, new Vector3(GameManager.Instance.Player.transform.position.x, GameManager.Instance.Player.transform.position.y-3, GameManager.Instance.Player.transform.position.z), Quaternion.identity);
+            GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(GameManager.Instance.Player.transform.position.x, GameManager.Instance.Player.transform.position.y - 3, GameManager.Instance.Player.transform.position.z), Quaternion.identity), 1f);
             this.poolDepth++;
             this.depth.transform.DOScaleY(Mathf.Max(.001f, this.poolDepth), this.digDuration).SetEase(this.digEase);
             this.layers.transform.DOLocalMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);

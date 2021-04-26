@@ -109,7 +109,7 @@ public class PlayerBehaviour : MonoBehaviour {
             this.hasDug = true;
         }
         PoolDepthBehaviour pool = this.gameManager.Pool;
-        Instantiate(this.fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
+        GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity), 1f);
         FindObjectOfType<AudioManager>().Play("Dig");
         if(pool.Dig(digDamage == null ? this.digDamage : digDamage.Value)) {
             this.dugLayers++;
