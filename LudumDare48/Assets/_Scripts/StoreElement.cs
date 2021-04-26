@@ -10,19 +10,18 @@ public class StoreElement : MonoBehaviour {
     private void Start()
     {
         this.texts = GetComponentsInChildren<TMPro.TextMeshProUGUI>();
-        RefreshText(this.stats.Name, this.stats.Cost.ToString(),this.Level.ToString());
+        RefreshText(this.stats.Name, this.stats.Cost.ToString());
     }
 
-    private void RefreshText(string name, string cost,string level)
+    private void RefreshText(string name, string cost)
     {
         texts[0].text = name;
         texts[1].text = cost;
-        texts[2].text = level;
     }
 
     public void Buy() {
         GameManager.Instance.Buy(this.stats, this);
-        RefreshText(this.stats.Name, (this.stats.Cost * AddPrice).ToString() , this.Level.ToString());
+        RefreshText(this.stats.Name, (this.stats.Cost * AddPrice).ToString() );
     }
     
     TMPro.TextMeshProUGUI[] texts = null;
