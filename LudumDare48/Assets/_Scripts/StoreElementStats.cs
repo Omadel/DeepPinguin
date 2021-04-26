@@ -12,4 +12,4 @@ public class StoreElementStats : ScriptableObject {
     [SerializeField] private int amount = 1, cost = 1;
 }
 
-public enum BonusTypes { BreathTime, Money, DigStrenght, AutoClicksAmount }
+public enum BonusTypes { BreathTime, Money, DigStrenght, AutoClicksDamage, AutoClickFrequency }

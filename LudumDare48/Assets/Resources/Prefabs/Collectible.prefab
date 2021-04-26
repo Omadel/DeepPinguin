@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3965802889733991092}
   - component: {fileID: 3965802889733991093}
+  - component: {fileID: 5896772282089829095}
   m_Layer: 0
   m_Name: Collectible
   m_TagString: Untagged
@@ -55,6 +56,19 @@ MonoBehaviour:
   animationEase: 6
   fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
     type: 3}
+--- !u!135 &5896772282089829095
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3965802889733991095}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8967788894787918494
 GameObject:
   m_ObjectHideFlags: 0

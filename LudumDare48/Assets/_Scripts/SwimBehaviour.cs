@@ -18,6 +18,7 @@ public class SwimBehaviour : MonoBehaviour {
 
     private void OnDisable() {
         StopCoroutine(this.spawnCollectibles);
+        this.moveDir = Vector3.zero;
     }
 
     private IEnumerator SpawnCollectible(float min, float max) {
