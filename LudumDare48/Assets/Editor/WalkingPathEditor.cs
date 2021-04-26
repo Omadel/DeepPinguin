@@ -19,8 +19,10 @@ public class WalkingPathEditor : Editor {
     private void OnEnable() => Init();
 
     private void OnSceneGUI() {
-        Handles.DrawAAPolyLine(this.waypoints);
-        Init();
+        if(!Application.isPlaying) {
+            Handles.DrawAAPolyLine(this.waypoints);
+            Init();
+        }
     }
     public override void OnInspectorGUI() {
         if(GUILayout.Button($"{(this.showGhost ? "Hide" : "Show")} Waypoint Ghosts")) {
