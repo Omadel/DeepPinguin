@@ -7843,6 +7843,12 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1441939518 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6507858789150693450, guid: 1457f2ba1b0e32c4abb25771010828f2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8160581956821435696}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1475081414
 GameObject:
   m_ObjectHideFlags: 0
@@ -9152,6 +9158,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5281246956561015986, guid: 2cc6dccba79dea248a23f49eddc02251,
+        type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 1441939518}
     - target: {fileID: 5449723474234271455, guid: 2cc6dccba79dea248a23f49eddc02251,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
