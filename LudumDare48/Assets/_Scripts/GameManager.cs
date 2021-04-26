@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI Money { get => this.moneyText; }
     public TextMeshProUGUI DigDamage { get => this.digDmgText; }
     public Slider BreathBar { get => this.breathBar; }
+    public Slider LayerBar { get => this.layerBar; }
     public PlayerBehaviour Player { get => this.player; }
     public PalierApparition Palier { get => this.palier; }
     public GameObject Stats { get => this.stats; }
@@ -18,13 +19,13 @@ public class GameManager : MonoBehaviour {
     public Button ClickableArea { get => this.clickableArea; }
     public GameObject WaterPoolGo { get => this.waterPoolGo; }
     public SwimBehaviour SwimBehaviour { get => this.swimBehaviour; }
-    
-    
+
+
 
     [SerializeField] private PoolDepthBehaviour pool = null;
     [SerializeField] private PlayerBehaviour player = null;
     [SerializeField] private PalierApparition palier = null;
-   
+
 
 
     [Header("UI")]
@@ -33,11 +34,11 @@ public class GameManager : MonoBehaviour {
     [Header("TextFields"), Space(-10)]
     [SerializeField] private TextMeshProUGUI scoreText = null;
     [SerializeField] private TextMeshProUGUI moneyText = null, digDmgText = null;
-    [SerializeField] private Slider breathBar = null;
+    [SerializeField] private Slider breathBar = null, layerBar = null;
     [SerializeField] private GameObject stats = null, store = null, digging = null, waterPoolGo = null;
- 
 
-    
+
+
 
     private void Awake() {
         if(GameManager.Instance == null) {
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour {
 
     public void Buy(StoreElementStats stats, StoreElement storeElement) {
         if(this.player.Money >= stats.Cost * storeElement.AddPrice) {
-            this.player.AddMoney(-stats.Cost*storeElement.AddPrice);
+            this.player.AddMoney(-stats.Cost * storeElement.AddPrice);
             switch(stats.BonusTypes) {
                 case BonusTypes.BreathTime:
                     this.player.AddBreathTime(stats.Amount);
