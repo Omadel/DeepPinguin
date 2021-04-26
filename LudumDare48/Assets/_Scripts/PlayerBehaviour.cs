@@ -88,7 +88,6 @@ public class PlayerBehaviour : MonoBehaviour {
             AddMoney(1);
         }
         FindObjectOfType<AudioManager>().Stop("calcul");
-        SetState(PlayerState.Buy);
     }
 
     public void AddBreathTime(int amount) {
@@ -120,6 +119,7 @@ public class PlayerBehaviour : MonoBehaviour {
                 this.hasDug = false;
                 break;
             case PlayerState.GainMoney:
+                GainMoney();
                 break;
             case PlayerState.Buy:
                 this.gameManager.UIPanDown(this.gameManager.Store);
@@ -139,7 +139,7 @@ public class PlayerBehaviour : MonoBehaviour {
                 this.gameManager.ClickableArea.interactable = true;
                 break;
             case PlayerState.GainMoney:
-                this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(GainMoney).SetEase(Ease.Linear);
+                this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(() => SetState(PlayerState.Buy)).SetEase(Ease.Linear);
                 Vector3 towards = new Vector3(this.walkingPath.Waypoints[0].x, this.transform.position.y, this.walkingPath.Waypoints[0].z);
                 this.transform.DOLookAt(towards, .4f);
                 break;
