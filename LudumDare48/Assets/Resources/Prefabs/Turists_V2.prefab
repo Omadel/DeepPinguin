@@ -3018,6 +3018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1734206604615269413}
+  - component: {fileID: 5738183566408660438}
   m_Layer: 0
   m_Name: Tourist_Shirt_2
   m_TagString: Untagged
@@ -3040,6 +3041,20 @@ Transform:
   m_Father: {fileID: 6475623567323297576}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5738183566408660438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878724183461336356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &2198200509940293586
 GameObject:
   m_ObjectHideFlags: 0
@@ -6246,6 +6261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8986147229523369602}
+  - component: {fileID: 3869945631166598222}
   m_Layer: 0
   m_Name: Tourist_Glasses_1
   m_TagString: Untagged
@@ -6268,6 +6284,20 @@ Transform:
   m_Father: {fileID: 6475623567323297576}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3869945631166598222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3712995019630982158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &3783185697544603567
 GameObject:
   m_ObjectHideFlags: 0
@@ -7663,6 +7693,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8971042900277150465}
+  - component: {fileID: 9084466418113775402}
   m_Layer: 0
   m_Name: Tourist_Shirt_Glasses_1
   m_TagString: Untagged
@@ -7685,6 +7716,20 @@ Transform:
   m_Father: {fileID: 6475623567323297576}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9084466418113775402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4846772365962612537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &5102758254176531752
 GameObject:
   m_ObjectHideFlags: 0
@@ -8802,6 +8847,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6327028326155783547}
   - component: {fileID: 6327028326155783546}
+  - component: {fileID: 5339837657704742665}
   m_Layer: 0
   m_Name: Tourist_Normal (4)
   m_TagString: Untagged
@@ -8844,6 +8890,20 @@ MonoBehaviour:
   pathLoopType: 1
   pathEase: 4
   lookAhead: 0.1
+--- !u!114 &5339837657704742665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327028326155783525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &6327028326225294138
 GameObject:
   m_ObjectHideFlags: 0
@@ -8886,6 +8946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6327028326245117192}
   - component: {fileID: 6327028326245117193}
+  - component: {fileID: 4357192807201579262}
   m_Layer: 0
   m_Name: Tourist_Normal (3)
   m_TagString: Untagged
@@ -8928,6 +8989,20 @@ MonoBehaviour:
   pathLoopType: 1
   pathEase: 4
   lookAhead: 0.1
+--- !u!114 &4357192807201579262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327028326245117206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &6327028326359657040
 GameObject:
   m_ObjectHideFlags: 0
@@ -9118,6 +9193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6327028326913117841}
   - component: {fileID: 6327028326913117840}
+  - component: {fileID: 5927878033893461648}
   m_Layer: 0
   m_Name: Tourist_Normal (1)
   m_TagString: Untagged
@@ -9160,6 +9236,20 @@ MonoBehaviour:
   pathLoopType: 1
   pathEase: 4
   lookAhead: 0.1
+--- !u!114 &5927878033893461648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327028326913117839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &6327028326918456920
 GameObject:
   m_ObjectHideFlags: 0
@@ -9170,6 +9260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6327028326918456902}
   - component: {fileID: 6327028326918456903}
+  - component: {fileID: 8444390610734306063}
   m_Layer: 0
   m_Name: Tourist_Normal
   m_TagString: Untagged
@@ -9212,6 +9303,20 @@ MonoBehaviour:
   pathLoopType: 1
   pathEase: 4
   lookAhead: 0.1
+--- !u!114 &8444390610734306063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327028326918456920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &6327028327039787558
 GameObject:
   m_ObjectHideFlags: 0
@@ -9578,6 +9683,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6327028327863354341}
   - component: {fileID: 6327028327863354340}
+  - component: {fileID: 3373309674450241738}
   m_Layer: 0
   m_Name: Tourist_Normal (2)
   m_TagString: Untagged
@@ -9620,6 +9726,20 @@ MonoBehaviour:
   pathLoopType: 1
   pathEase: 4
   lookAhead: 0.1
+--- !u!114 &3373309674450241738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327028327863354363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &6365743210362136592
 GameObject:
   m_ObjectHideFlags: 0
@@ -10363,6 +10483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5246363795840233030}
+  - component: {fileID: 1438786392190666742}
   m_Layer: 0
   m_Name: Tourist_Hat_1
   m_TagString: Untagged
@@ -10385,6 +10506,20 @@ Transform:
   m_Father: {fileID: 6475623567323297576}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1438786392190666742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7007227152362153365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &7176604315655501727
 GameObject:
   m_ObjectHideFlags: 0
@@ -10724,6 +10859,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9038979196045124692}
+  - component: {fileID: 2155406215197722748}
   m_Layer: 0
   m_Name: Tourist_Hat_2
   m_TagString: Untagged
@@ -10746,6 +10882,20 @@ Transform:
   m_Father: {fileID: 6475623567323297576}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2155406215197722748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7879295249549403037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &8257307695193620658
 GameObject:
   m_ObjectHideFlags: 0
@@ -11448,6 +11598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9201955337674804430}
+  - component: {fileID: 510186014181168407}
   m_Layer: 0
   m_Name: Tourist_Shirt_1
   m_TagString: Untagged
@@ -11470,6 +11621,20 @@ Transform:
   m_Father: {fileID: 6475623567323297576}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &510186014181168407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751595124156519379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd412eeb37f8e442ae53c418234a9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
+    type: 3}
 --- !u!1 &9076988698256469381
 GameObject:
   m_ObjectHideFlags: 0
