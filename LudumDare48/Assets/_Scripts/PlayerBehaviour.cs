@@ -218,7 +218,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         GameObject.Destroy(other.gameObject);
-        AddMoney(1);
+        AddMoney(GameManager.Instance.AddMoney);
     }
 
     public void SetAutoClicker(bool activate = false) {
