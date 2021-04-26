@@ -50,6 +50,8 @@ public class PlayerBehaviour : MonoBehaviour {
              }
          );
         Invoke("PathEnded", this.pathDuration);
+
+        GameManager.Instance.Palier.CheckPalier();
     }
 
     private void PathEnded() {

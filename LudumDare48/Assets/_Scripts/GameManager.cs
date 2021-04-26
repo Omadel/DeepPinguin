@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI DigDamage { get => this.digDmgText; }
     public Slider BreathBar { get => this.breathBar; }
     public PlayerBehaviour Player { get => this.player; }
+    public PalierApparition Palier { get => this.palier; }
     public GameObject Stats { get => this.stats; }
     public GameObject Store { get => this.store; }
     public GameObject Digging { get => this.digging; }
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField] private PoolDepthBehaviour pool = null;
     [SerializeField] private PlayerBehaviour player = null;
+    [SerializeField] private PalierApparition palier = null;
+
 
     [Header("UI")]
     [SerializeField] private Button clickableArea = null;
