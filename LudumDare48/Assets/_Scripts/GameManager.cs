@@ -85,6 +85,9 @@ public class GameManager : MonoBehaviour {
                 case BonusTypes.AutoClickFrequency:
                     this.player.SetAutoClicker(false, 0, true);
                     break;
+                case BonusTypes.SwimSpeed:
+                    this.player.AddSwimSpeed(stats.Amount);
+                    break;
                 default:
                     break;
             };

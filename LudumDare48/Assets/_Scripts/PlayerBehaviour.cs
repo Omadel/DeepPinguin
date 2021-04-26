@@ -79,6 +79,7 @@ public class PlayerBehaviour : MonoBehaviour {
         }
     }
 
+
     private void Update() {
         if(this.state == PlayerState.Swim && this.transform.position.y <= -this.gameManager.Pool.Depth) {
             this.transform.DOMoveY(-this.gameManager.Pool.Depth, 0, true);
@@ -138,6 +139,10 @@ public class PlayerBehaviour : MonoBehaviour {
     public void AddDigDamage(int amount) {
         this.digDamage += amount;
         this.gameManager.DigDamage.text = this.digDamage.ToString();
+    }
+
+    public void AddSwimSpeed(int amount) {
+        this.swimSpeed += amount;
     }
 
     public void SetState(PlayerState state) {
