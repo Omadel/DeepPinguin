@@ -169,9 +169,11 @@ MonoBehaviour:
   digDamage: 1
   money: 0
   shovel: {fileID: 193204638311706807}
+  fxPrefab: {fileID: 4949795666201551630, guid: eb9d202f77070cc47a32119418a6d25b,
+    type: 3}
   walkingPath: {fileID: 0}
   pathDuration: 15
-  pathEase: 0
+  pathType: 0
   divingPath: {fileID: 0}
   divingPathDuration: 0.56
   divingPathEase: 0

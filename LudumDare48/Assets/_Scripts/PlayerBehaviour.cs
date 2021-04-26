@@ -14,6 +14,7 @@ public class PlayerBehaviour : MonoBehaviour {
     [SerializeField] private int digDamage = 1;
     [SerializeField] [Min(0)] private int money = 0;
     [SerializeField] private GameObject shovel = null;
+    [SerializeField] private GameObject fxPrefab = null;
     [Header("Walk")]
     [SerializeField] private WalkingPath walkingPath = null;
     [SerializeField] private float pathDuration = 15f;
@@ -101,6 +102,7 @@ public class PlayerBehaviour : MonoBehaviour {
             this.hasDug = true;
         }
         PoolDepthBehaviour pool = this.gameManager.Pool;
+        Instantiate(fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
         FindObjectOfType<AudioManager>().Play("Dig");
         if (pool.Dig(this.digDamage)) {
             this.dugLayers++;

@@ -608,6 +608,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   layerHurtColor: {r: 1, g: 1, b: 1, a: 0.7176471}
+  fxPrefab: {fileID: 8450268652894734010, guid: c5a38f1c09510b545b3fd72d5f72f771,
+    type: 3}
+  Player: {fileID: 0}
   digDuration: 0.5
   digEase: 6
 --- !u!114 &6381126776587688393
