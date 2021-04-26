@@ -17,6 +17,9 @@ public class Tourist : MonoBehaviour {
     [SerializeField] private float lookAhead = .1f;
 
     private void Start() {
+        if(this.walkingPath == null) {
+            return;
+        }
         this.path = this.walkingPath.Waypoints;
         this.transform.DOPath(this.path, this.pathDuration, this.pathType, this.pathMode)
             .SetLoops(this.loops, this.pathLoopType)
