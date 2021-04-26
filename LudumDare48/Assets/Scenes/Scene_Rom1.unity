@@ -12532,6 +12532,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 134.09917
       objectReference: {fileID: 0}
+    - target: {fileID: 629086831274019174, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 495de373874d00f469b7236ab0170780, type: 2}
+    - target: {fileID: 629086831274019174, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b009154493e9dd4c8befcfff5c8e33e, type: 2}
+    - target: {fileID: 629086831274019174, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 20be09376a2798046871261a9828a709, type: 2}
+    - target: {fileID: 629086831274019174, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6b009154493e9dd4c8befcfff5c8e33e, type: 2}
+    - target: {fileID: 629086831274019174, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6de852fdb03f9f94d8f612ab1fcdbca4, type: 2}
     - target: {fileID: 753656318868067098, guid: 1457f2ba1b0e32c4abb25771010828f2,
         type: 3}
       propertyPath: m_Name
@@ -12592,6 +12617,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 2720271312127876226, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bf60f08fa3ffa684c8f9fcc027b4b46c, type: 2}
     - target: {fileID: 2991702490772575869, guid: 1457f2ba1b0e32c4abb25771010828f2,
         type: 3}
       propertyPath: m_Enabled
