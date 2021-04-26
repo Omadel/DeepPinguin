@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47038d0eea1b8f24caebbb3856662a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingPath: {fileID: 0}
+  walkingPath: {fileID: 1013336230120265081}
   pathDuration: 2
   pathType: 1
   pathMode: 1
