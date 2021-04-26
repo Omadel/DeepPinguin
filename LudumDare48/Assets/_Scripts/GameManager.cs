@@ -18,10 +18,13 @@ public class GameManager : MonoBehaviour {
     public Button ClickableArea { get => this.clickableArea; }
     public GameObject WaterPoolGo { get => this.waterPoolGo; }
     public SwimBehaviour SwimBehaviour { get => this.swimBehaviour; }
+    
+    
 
     [SerializeField] private PoolDepthBehaviour pool = null;
     [SerializeField] private PlayerBehaviour player = null;
     [SerializeField] private PalierApparition palier = null;
+   
 
 
     [Header("UI")]
@@ -32,6 +35,9 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI moneyText = null, digDmgText = null;
     [SerializeField] private Slider breathBar = null;
     [SerializeField] private GameObject stats = null, store = null, digging = null, waterPoolGo = null;
+ 
+
+    
 
     private void Awake() {
         if(GameManager.Instance == null) {
@@ -51,9 +57,9 @@ public class GameManager : MonoBehaviour {
 
     public void Dig() => this.player.Dig();
 
-    public void Buy(StoreElementStats stats) {
-        if(this.player.Money >= stats.Cost) {
-            this.player.AddMoney(-stats.Cost);
+    public void Buy(StoreElementStats stats, StoreElement storeElement) {
+        if(this.player.Money >= stats.Cost * storeElement.AddPrice) {
+            this.player.AddMoney(-stats.Cost*storeElement.AddPrice);
             switch(stats.BonusTypes) {
                 case BonusTypes.BreathTime:
                     this.player.AddBreathTime(stats.Amount);
@@ -69,6 +75,8 @@ public class GameManager : MonoBehaviour {
                 default:
                     break;
             };
+            storeElement.AddPrice += 1;
+            storeElement.Level += 1;
         }
     }
 
