@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d362181aec5158c45ad0495a96f694d6, type: 3}
-  m_Name: Money_multi
+  m_Name: Auto_frequencyu
   m_EditorClassIdentifier: 
-  name: 'Fish Boost '
-  bonusType: 1
+  name: AutoClicks Frequency
+  bonusType: 4
   amount: 2
-  cost: 10
+  cost: 100
