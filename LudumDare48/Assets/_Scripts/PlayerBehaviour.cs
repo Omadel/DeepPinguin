@@ -9,6 +9,7 @@ public class PlayerBehaviour : MonoBehaviour {
     public int BreathTime { get => this.breathTime; set => this.breathTime = value; }
     public float SwimSpeed { get => this.swimSpeed; }
     public float SideSwimSpeed { get => this.sideSwimSpeed; }
+    public PlayerState State { get => this.state; }
 
     [SerializeField] private int digDamage = 1;
     [SerializeField] [Min(0)] private int money = 0;
