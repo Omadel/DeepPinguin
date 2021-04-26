@@ -42,7 +42,7 @@ public class PoolDepthBehaviour : MonoBehaviour {
         this.impulseSource.GenerateImpulse();
         if(this.layerHealth <= 0) {
             FindObjectOfType<AudioManager>().Play("Break");
-            GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(GameManager.Instance.Player.transform.position.x, GameManager.Instance.Player.transform.position.y - 3, GameManager.Instance.Player.transform.position.z), Quaternion.identity), 1f);
+            GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(GameManager.Instance.Player.transform.position.x, GameManager.Instance.Player.transform.position.y - 3, GameManager.Instance.Player.transform.position.z), Quaternion.identity), 2f);
             this.poolDepth++;
             this.depth.transform.DOScaleY(Mathf.Max(.001f, this.poolDepth), this.digDuration).SetEase(this.digEase);
             this.layers.transform.DOLocalMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);

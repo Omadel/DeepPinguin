@@ -109,7 +109,7 @@ public class PlayerBehaviour : MonoBehaviour {
             this.hasDug = true;
         }
         PoolDepthBehaviour pool = this.gameManager.Pool;
-        GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity), 1f);
+        GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity), 2f);
         FindObjectOfType<AudioManager>().Play("Dig");
         if(pool.Dig(digDamage == null ? this.digDamage : digDamage.Value)) {
             this.dugLayers++;
@@ -122,7 +122,7 @@ public class PlayerBehaviour : MonoBehaviour {
             FindObjectOfType<AudioManager>().Play("calcul");
             yield return new WaitForSecondsRealtime(2f / amount);
             this.dugLayers--;
-            AddMoney(1);
+            AddMoney(1 * this.gameManager.MoneyMultiplicator);
         }
         FindObjectOfType<AudioManager>().Stop("calcul");
     }
@@ -218,7 +218,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         GameObject.Destroy(other.gameObject);
-        AddMoney(GameManager.Instance.AddMoney);
+        AddMoney(1 * this.gameManager.MoneyMultiplicator);
     }
 
     public void SetAutoClicker(bool activate = false) {

@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
     public Button ClickableArea { get => this.clickableArea; }
     public GameObject WaterPoolGo { get => this.waterPoolGo; }
     public SwimBehaviour SwimBehaviour { get => this.swimBehaviour; }
-    public int AddMoney { get => this.addMoney; }
+    public int MoneyMultiplicator { get => this.moneyMultiplicator; }
 
 
 
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private PlayerBehaviour player = null;
     [SerializeField] private PalierApparition palier = null;
     [SerializeField] private GameObject layerGo = null, waterPoolGo = null;
-    [SerializeField] private int addMoney=1;
+    [SerializeField] private int moneyMultiplicator = 1;
 
 
 
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour {
                     storeElement.Level += 1;
                     break;
                 case BonusTypes.Money:
-                    addMoney = addMoney * stats.Amount;
+                    this.moneyMultiplicator += stats.Amount;
                     //this.player.AddMoney(stats.Amount);
                     break;
                 case BonusTypes.DigStrenght:
