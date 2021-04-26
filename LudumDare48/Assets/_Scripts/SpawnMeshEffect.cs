@@ -24,6 +24,9 @@ public class SpawnMeshEffect : MonoBehaviour {
             } else {
                 child.DOScale(1, this.animationTimer).SetEase(this.animationCurve);
             }
+            if(this.fxPrefab != null && this.transform.Find($"{this.fxPrefab.name}(Clone)") == null) {
+                Instantiate(this.fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity, this.transform);
+            }
             if(delay > 0) {
                 yield return new WaitForSecondsRealtime(delay);
             }

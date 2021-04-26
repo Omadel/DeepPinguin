@@ -223,7 +223,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: StoreClose
     clip: {fileID: 8300000, guid: 99642dc25fb468742972edead005efc0, type: 3}
-    volume: 1
+    volume: 0.4
     pitch: 1
     loop: 0
     source: {fileID: 0}

@@ -1,11 +1,31 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class SwimBehaviour : MonoBehaviour {
 
+    [SerializeField] private GameObject[] bonusPrefabs = null;
+    [Tooltip("x=>Min y=>Max")]
+    [SerializeField] private Vector2 rangeSpawnTime = new Vector2(1f, 3f);
 
     private void Start() {
         this.player = GameManager.Instance.Player;
         this.gameObject.SetActive(false);
+    }
+    private void OnEnable() {
+        this.spawnCollectibles = StartCoroutine(SpawnCollectible(this.rangeSpawnTime.x, this.rangeSpawnTime.y));
+    }
+
+    private void OnDisable() {
+        StopCoroutine(this.spawnCollectibles);
+    }
+
+    private IEnumerator SpawnCollectible(float min, float max) {
+        while(true) {
+            yield return new WaitForSecondsRealtime(Random.Range(min, max));
+            this.collectibles.Add(Instantiate(this.bonusPrefabs[0], this.player.transform.position + Vector3.down * 10, Quaternion.identity));
+            print("Spawn Fish");
+        }
     }
 
     private void Update() {
@@ -33,6 +53,8 @@ public class SwimBehaviour : MonoBehaviour {
         print(direction);
     }
 
+    private List<GameObject> collectibles = new List<GameObject>();
+    private Coroutine spawnCollectibles;
     private Vector3 moveDir = Vector3.zero;
     private PlayerBehaviour player = null;
 }
