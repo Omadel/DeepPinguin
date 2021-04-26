@@ -4,6 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(WalkingPath))]
 public class WalkingPathEditor : Editor {
     private Vector3[] waypoints = null;
+    private bool showGhost = false;
     private void Init() {
         WalkingPath walkingPath = (WalkingPath)this.target;
         this.waypoints = walkingPath.Waypoints;
@@ -19,8 +20,17 @@ public class WalkingPathEditor : Editor {
 
     private void OnSceneGUI() {
         Handles.DrawAAPolyLine(this.waypoints);
+        Init();
     }
     public override void OnInspectorGUI() {
+        if(GUILayout.Button($"{(this.showGhost ? "Hide" : "Show")} Waypoint Ghosts")) {
+            this.showGhost = !this.showGhost;
+            WalkingPath walkingPath = (WalkingPath)this.target;
+            MeshRenderer[] ghosts = walkingPath.gameObject.GetComponentsInChildren<MeshRenderer>();
+            foreach(MeshRenderer ghost in ghosts) {
+                ghost.enabled = this.showGhost;
+            }
+        }
         base.OnInspectorGUI();
     }
 

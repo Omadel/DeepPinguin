@@ -43,19 +43,17 @@ public class PlayerBehaviour : MonoBehaviour {
         StartCoroutine(SetScore(this.gameManager.Pool.Depth));
         this.transform.DOPath(this.walkingPath.Waypoints, this.pathDuration, this.pathEase, PathMode.Sidescroller2D, 10, Color.blue)
              .OnWaypointChange((int index) => {
-                 Vector3 towards = new Vector3(this.walkingPath.Waypoints[index + 1].x, this.walkingPath.Waypoints[index].y, this.walkingPath.Waypoints[index + 1].z);
-                 this.transform.DOLookAt(towards,
-                 .4f);
-                 Debug.DrawLine(this.walkingPath.Waypoints[index], towards, Color.red, 1f);
+                 if(index + 1 < this.walkingPath.Waypoints.Length) {
+                     Vector3 towards = new Vector3(this.walkingPath.Waypoints[index + 1].x, this.walkingPath.Waypoints[index].y, this.walkingPath.Waypoints[index + 1].z);
+                     this.transform.DOLookAt(towards, .4f);
+                     Debug.DrawLine(this.walkingPath.Waypoints[index], towards, Color.red, 1f);
+                 }
              }
          );
         Invoke("PathEnded", this.pathDuration);
-
-        GameManager.Instance.Palier.CheckPalier();
     }
 
     private void PathEnded() {
-        SetState(PlayerState.Idle);
     }
 
     private void Update() {
@@ -111,7 +109,6 @@ public class PlayerBehaviour : MonoBehaviour {
         print($"Changed state from {this.state} to {state}");
         switch(this.state) {
             case PlayerState.Idle:
-                this.gameManager.UIPanDown(this.gameManager.Store);
                 break;
             case PlayerState.Swim:
                 this.swimBehaviour.gameObject.SetActive(false);
@@ -125,6 +122,7 @@ public class PlayerBehaviour : MonoBehaviour {
             case PlayerState.GainMoney:
                 break;
             case PlayerState.Buy:
+                this.gameManager.UIPanDown(this.gameManager.Store);
                 break;
             default:
                 break;
@@ -141,10 +139,13 @@ public class PlayerBehaviour : MonoBehaviour {
                 this.gameManager.ClickableArea.interactable = true;
                 break;
             case PlayerState.GainMoney:
-                this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(GainMoney);
+                this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(GainMoney).SetEase(Ease.Linear);
+                Vector3 towards = new Vector3(this.walkingPath.Waypoints[0].x, this.transform.position.y, this.walkingPath.Waypoints[0].z);
+                this.transform.DOLookAt(towards, .4f);
                 break;
             case PlayerState.Buy:
                 this.gameManager.UIPanUP(this.gameManager.Store);
+                GameManager.Instance.Palier.CheckPalier();
                 break;
             default:
                 break;
