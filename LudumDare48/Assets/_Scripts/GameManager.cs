@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private PlayerBehaviour player = null;
     [SerializeField] private PalierApparition palier = null;
     [SerializeField] private GameObject layerGo = null, waterPoolGo = null;
-    [SerializeField] private int addMoney;
+    [SerializeField] private int addMoney=1;
 
 
 
