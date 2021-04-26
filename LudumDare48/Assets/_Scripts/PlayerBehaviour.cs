@@ -41,13 +41,18 @@ public class PlayerBehaviour : MonoBehaviour {
     private void GainMoney() {
         StartCoroutine(SetScore(this.gameManager.Pool.Depth));
         this.transform.DOPath(this.walkingPath.Waypoints, this.pathDuration, this.pathEase, PathMode.Sidescroller2D, 10, Color.blue)
-            .OnWaypointChange((int index) => {
-                Vector3 towards = new Vector3(this.walkingPath.Waypoints[index + 1].x, this.walkingPath.Waypoints[index].y, this.walkingPath.Waypoints[index + 1].z);
-                this.transform.DOLookAt(towards,
-                .4f).OnComplete(() => SetState(PlayerState.Idle));
-                Debug.DrawLine(this.walkingPath.Waypoints[index], towards, Color.red, 1f);
-            }
-        );
+             .OnWaypointChange((int index) => {
+                 Vector3 towards = new Vector3(this.walkingPath.Waypoints[index + 1].x, this.walkingPath.Waypoints[index].y, this.walkingPath.Waypoints[index + 1].z);
+                 this.transform.DOLookAt(towards,
+                 .4f);
+                 Debug.DrawLine(this.walkingPath.Waypoints[index], towards, Color.red, 1f);
+             }
+         );
+        Invoke("PathEnded", this.pathDuration);
+    }
+
+    private void PathEnded() {
+        SetState(PlayerState.Idle);
     }
 
     private void Update() {
@@ -103,6 +108,7 @@ public class PlayerBehaviour : MonoBehaviour {
         print($"Changed state from {this.state} to {state}");
         switch(this.state) {
             case PlayerState.Idle:
+                this.gameManager.UIPanDown(this.gameManager.Store);
                 break;
             case PlayerState.Swim:
                 this.swimBehaviour.gameObject.SetActive(false);
@@ -116,7 +122,6 @@ public class PlayerBehaviour : MonoBehaviour {
             case PlayerState.GainMoney:
                 break;
             case PlayerState.Buy:
-                this.gameManager.UIPanDown(this.gameManager.Store);
                 break;
             default:
                 break;
@@ -144,7 +149,7 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
 
-    private PlayerState state = PlayerState.Idle;
+    private PlayerState state = PlayerState.Dig;
     private SwimBehaviour swimBehaviour = null;
     private GameManager gameManager = null;
     private int dugLayers = 0;
