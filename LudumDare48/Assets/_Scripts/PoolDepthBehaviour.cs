@@ -39,6 +39,7 @@ public class PoolDepthBehaviour : MonoBehaviour {
         GameManager.Instance.LayerBar.transform.DOShakeRotation(.1f, 4f);
         this.impulseSource.GenerateImpulse();
         if(this.layerHealth <= 0) {
+            FindObjectOfType<AudioManager>().Play("Break");
             this.poolDepth++;
             this.depth.transform.DOScaleY(Mathf.Max(.001f, this.poolDepth), this.digDuration).SetEase(this.digEase);
             this.layers.transform.DOLocalMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);

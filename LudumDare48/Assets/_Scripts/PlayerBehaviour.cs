@@ -101,8 +101,8 @@ public class PlayerBehaviour : MonoBehaviour {
             this.hasDug = true;
         }
         PoolDepthBehaviour pool = this.gameManager.Pool;
-        if(pool.Dig(this.digDamage)) {
-            FindObjectOfType<AudioManager>().Play("Dig");
+        FindObjectOfType<AudioManager>().Play("Dig");
+        if (pool.Dig(this.digDamage)) {
             this.dugLayers++;
         }
         ResetAllBoolAnimator();
@@ -149,7 +149,10 @@ public class PlayerBehaviour : MonoBehaviour {
                 this.gameManager.UIPanDown(this.gameManager.Digging);
                 this.gameManager.ClickableArea.onClick.RemoveAllListeners();
                 this.gameManager.ClickableArea.interactable = false;
+                FindObjectOfType<AudioManager>().Play("Swim");
                 break;
+
+
             case PlayerState.GainMoney:
                 GainMoney();
                 break;

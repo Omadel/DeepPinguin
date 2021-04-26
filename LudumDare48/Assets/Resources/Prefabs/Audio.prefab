@@ -204,7 +204,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Dig
-    clip: {fileID: 8300000, guid: 4e9e6084ebbe41145b02cee1129b95f6, type: 3}
+    clip: {fileID: 8300000, guid: 8c9a30856452a844ebbbb14b23be513c, type: 3}
+    volume: 0.4
+    pitch: 1.7
+    loop: 0
+    source: {fileID: 0}
+  - name: calcul
+    clip: {fileID: 8300000, guid: 975b1747ef6a89c4bb2c8e3a653b55f1, type: 3}
     volume: 1
     pitch: 3
     loop: 0
@@ -213,5 +219,35 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 975b1747ef6a89c4bb2c8e3a653b55f1, type: 3}
     volume: 1
     pitch: 3
+    loop: 0
+    source: {fileID: 0}
+  - name: Buy
+    clip: {fileID: 8300000, guid: 362130fbba062154b9db4e42874c76cf, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Break
+    clip: {fileID: 8300000, guid: ce01517e174870c41ba44b9ab136b0e5, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Close_Store
+    clip: {fileID: 8300000, guid: 99642dc25fb468742972edead005efc0, type: 3}
+    volume: 1
+    pitch: 3
+    loop: 0
+    source: {fileID: 0}
+  - name: Palier
+    clip: {fileID: 8300000, guid: d8238ce2a8fff334a8361dfaa8d14ab4, type: 3}
+    volume: 0.7
+    pitch: 1.2
+    loop: 0
+    source: {fileID: 0}
+  - name: Swim
+    clip: {fileID: 8300000, guid: d307cdc54d063d34284f656b2786e732, type: 3}
+    volume: 0.2
+    pitch: 1.5
     loop: 0
     source: {fileID: 0}

@@ -586,6 +586,28 @@ MonoBehaviour:
   layerAmount: 20
   depth: {fileID: 7669165323601184711}
   layers: {fileID: 7669165323839578102}
+  layerMaterials:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  layerHurtColor: {r: 1, g: 1, b: 1, a: 0.7176471}
   digDuration: 0.5
   digEase: 6
 --- !u!114 &6381126776587688393

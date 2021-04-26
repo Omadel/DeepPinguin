@@ -16,8 +16,10 @@ public class PalierApparition : MonoBehaviour
         
         if (GameManager.Instance.Pool.Depth >= 10 * (value * value)+1 && value <33)
         {
+            FindObjectOfType<AudioManager>().Play("Palier");
             Palier[value].SetActive(true);
             value = value + 1;
+            
         }
         LevelText.text = value.ToString() + "/ " + 33 ;
     }
