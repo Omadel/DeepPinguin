@@ -198,7 +198,7 @@ MonoBehaviour:
   m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3c907e15610f32e4ea77d5ca4fb73068, type: 2}
-  m_sharedMaterial: {fileID: 4207813736161558713, guid: 3c907e15610f32e4ea77d5ca4fb73068,
+  m_sharedMaterial: {fileID: -6141730432039872689, guid: 3c907e15610f32e4ea77d5ca4fb73068,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -349,7 +349,6 @@ MonoBehaviour:
   stats: {fileID: 0}
   AddPrice: 1
   Level: 1
-  gameManager: {fileID: 0}
 --- !u!1 &1267076491091770984
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +546,7 @@ MonoBehaviour:
   m_text: Dig Strenght +1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3c907e15610f32e4ea77d5ca4fb73068, type: 2}
-  m_sharedMaterial: {fileID: 4207813736161558713, guid: 3c907e15610f32e4ea77d5ca4fb73068,
+  m_sharedMaterial: {fileID: -6141730432039872689, guid: 3c907e15610f32e4ea77d5ca4fb73068,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -573,10 +572,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 18.1
-  m_fontSizeBase: 11.8
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 8
   m_fontSizeMax: 67.17
   m_fontStyle: 0

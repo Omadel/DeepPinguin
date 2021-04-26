@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d362181aec5158c45ad0495a96f694d6, type: 3}
   m_Name: Auto_Boost
   m_EditorClassIdentifier: 
-  name: 'AutoClicks Boost '
+  name: Auto-Dig Damage
   bonusType: 3
   amount: 2
   cost: 100

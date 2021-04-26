@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d362181aec5158c45ad0495a96f694d6, type: 3}
   m_Name: Money_multi
   m_EditorClassIdentifier: 
-  name: 'Fish Boost '
+  name: Fish Multiplier
   bonusType: 1
   amount: 2
   cost: 10
