@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour {
         UIShow(UIGameObject);
         Vector3 position = UIGameObject.transform.position;
         UIGameObject.transform.position = new Vector3(position.x, -10, position.z);
-        UIGameObject.transform.DOMoveY(position.y, .2f);
+        UIGameObject.transform.DOMoveY(position.y, .4f);
     }
 
     public void UIPanDown(GameObject UIGameObject) {
