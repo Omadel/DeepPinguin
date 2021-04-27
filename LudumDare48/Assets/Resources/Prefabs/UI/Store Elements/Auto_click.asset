@@ -15,4 +15,4 @@ MonoBehaviour:
   name: Auto Click
   bonusType: 0
   amount: 0
-  cost: 10
+  cost: 25

@@ -15,4 +15,4 @@ MonoBehaviour:
   name: Fish Multiplier
   bonusType: 1
   amount: 2
-  cost: 1
+  cost: 100

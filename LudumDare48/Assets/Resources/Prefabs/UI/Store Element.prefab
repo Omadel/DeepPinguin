@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89806353bdaeac8448b09d20345284ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: 75baa98f6d75d834c867d75e91896d76, type: 2}
   AddPrice: 1
   Level: 1
 --- !u!1 &1267076491091770984

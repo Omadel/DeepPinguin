@@ -15,4 +15,4 @@ MonoBehaviour:
   name: AutoClicks Frequency
   bonusType: 4
   amount: 2
-  cost: 100
+  cost: 80

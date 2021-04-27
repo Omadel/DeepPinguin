@@ -12856,6 +12856,12 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1657964645818879766, guid: 2cc6dccba79dea248a23f49eddc02251,
+        type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 462e41adeba0e5b459f39095d3ce68b9,
+        type: 2}
     - target: {fileID: 1718140960764273206, guid: 2cc6dccba79dea248a23f49eddc02251,
         type: 3}
       propertyPath: m_Enabled
@@ -29941,6 +29947,11 @@ PrefabInstance:
         type: 3}
       propertyPath: isAutoClicker
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4397769812434276111, guid: 1457f2ba1b0e32c4abb25771010828f2,
+        type: 3}
+      propertyPath: pathDuration
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4451908140869703815, guid: 1457f2ba1b0e32c4abb25771010828f2,
         type: 3}

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Breath Time
   bonusType: 0
-  amount: 5
-  cost: 2
+  amount: 8
+  cost: 4

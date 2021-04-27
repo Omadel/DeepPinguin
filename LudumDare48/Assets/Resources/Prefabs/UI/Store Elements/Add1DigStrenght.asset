@@ -15,4 +15,4 @@ MonoBehaviour:
   name: Dig Strenght
   bonusType: 2
   amount: 1
-  cost: 1
+  cost: 2

@@ -15,4 +15,4 @@ MonoBehaviour:
   name: Auto-Dig Damage
   bonusType: 3
   amount: 2
-  cost: 100
+  cost: 80
