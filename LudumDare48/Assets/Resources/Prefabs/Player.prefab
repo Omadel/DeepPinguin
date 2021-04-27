@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoClickerDigDamage: 1
-  autoClickerFrequency: 2
+  autoClickerFrequency: 1
   digDamage: 1
   money: 0
   shovel: {fileID: 193204638311706807}
