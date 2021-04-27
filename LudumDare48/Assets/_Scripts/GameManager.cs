@@ -67,10 +67,9 @@ public class GameManager : MonoBehaviour {
         this.layerGo.transform.eulerAngles += Vector3.up * 90;
     }
 
-    public void BuyAutoClick(UnityEngine.UI.Button button) {
+    public void BuyAutoClick(GameObject button) {
         if(this.player.Money >= 25) {
-            this.player.SetAutoClicker(true);
-            button.interactable = false;
+            button.SetActive(false);
             this.autoclick.SetActive(true);
         }
     }

@@ -221,10 +221,19 @@ public class PlayerBehaviour : MonoBehaviour {
         AddMoney(1 * this.gameManager.MoneyMultiplicator);
     }
 
+    public void ToggleAutoLock() {
+        SetAutoClicker(!this.isAutoClicker);
+    }
+
     public void SetAutoClicker(bool activate = false) {
         this.isAutoClicker = activate;
         if(this.state == PlayerState.Dig) {
-            this.autoclick = StartCoroutine(AutoClick());
+            if(activate) {
+
+                this.autoclick = StartCoroutine(AutoClick());
+            } else {
+                StopCoroutine(this.autoclick);
+            }
         }
     }
 
