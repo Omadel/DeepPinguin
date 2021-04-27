@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI moneyText = null, digDmgText = null;
     [SerializeField] private TextMeshProUGUI LevelText = null;
     [SerializeField] private Slider breathBar = null, layerBar = null;
-    [SerializeField] private GameObject stats = null, store = null, digging = null;
+    [SerializeField] private GameObject stats = null, store = null, digging = null, autoclick = null;
 
 
 
@@ -68,9 +68,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void BuyAutoClick(UnityEngine.UI.Button button) {
-        if(this.player.Money >= 50) {
+        if(this.player.Money >= 25) {
             this.player.SetAutoClicker(true);
-            button.IsInteractable = false;
+            button.interactable = false;
+            this.autoclick.SetActive(true);
         }
     }
 
