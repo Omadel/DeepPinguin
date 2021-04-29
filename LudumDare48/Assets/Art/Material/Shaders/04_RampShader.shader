@@ -86,7 +86,7 @@ Shader "Medium/CustomLighting/04_RampShader"
 
 		ENDCG
 	}
-	CustomEditor "ASEMaterialInspector"
+	//CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=17700

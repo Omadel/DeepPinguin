@@ -241,7 +241,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Palier
     clip: {fileID: 8300000, guid: d8238ce2a8fff334a8361dfaa8d14ab4, type: 3}
-    volume: 0.7
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}

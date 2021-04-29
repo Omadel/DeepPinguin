@@ -122,7 +122,6 @@ Shader "Basic/UV/01_Panner"
 		}
 	}
 	Fallback "Diffuse"
-	CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=17700

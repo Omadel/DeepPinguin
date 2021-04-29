@@ -3,11 +3,12 @@ using UnityEngine;
 
 [CustomEditor(typeof(PoolDepthBehaviour))]
 public class PoolDepthEditor : Editor {
-    private SerializedProperty poolDepth, depth, layers, layerAmount;
+    private SerializedProperty poolDepth, depth, layers;
+    private int layerAmount;
+
 
     private void Init() {
         this.poolDepth = this.serializedObject.FindProperty("poolDepth");
-        this.layerAmount = this.serializedObject.FindProperty("layerAmount");
 
         this.depth = this.serializedObject.FindProperty("depth");
         this.layers = this.serializedObject.FindProperty("layers");
@@ -19,27 +20,41 @@ public class PoolDepthEditor : Editor {
         Init();
     }
 
+    public override void OnInspectorGUI() {
+        // this.layerAmount = (int)GUILayout.HorizontalSlider(this.layerAmount, 0, 20);
+        if(GUILayout.Button("Spawn Layers")) {
+            HandleLayerAmount();
+        }
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Layer Amount");
+        this.layerAmount = EditorGUILayout.IntSlider(this.layerAmount, 0, 20);
+        GUILayout.EndHorizontal();
+        base.OnInspectorGUI();
+    }
+
     private void OnSceneGUI() {
         HandlePoolDepth();
-        HandleLayerAmount();
+        //HandleLayerAmount();
     }
 
     private void HandleLayerAmount() {
         GameObject layersGo = (GameObject)this.layers.objectReferenceValue;
         int currentLayerAmount = layersGo.transform.childCount;
-        if(this.layerAmount.intValue != currentLayerAmount) {
-            GameObject layerPrefab = Resources.Load("Prefabs/Layer") as GameObject;
-            if(this.layerAmount.intValue > currentLayerAmount) {
+        Debug.Log($"child count : {currentLayerAmount} target layer amount : {this.layerAmount}");
+        if(this.layerAmount != currentLayerAmount) {
+            GameObject layerPrefab = Resources.Load("Prefabs/Gameplay/Layer") as GameObject;
+            PoolDepthBehaviour pool = (PoolDepthBehaviour)this.target;
+            while(this.layerAmount > currentLayerAmount) {
                 GameObject layer = GameObject.Instantiate(layerPrefab, layersGo.transform, false);
                 layer.transform.localPosition = new Vector3(0, -currentLayerAmount, 0);
-                PoolDepthBehaviour pool = (PoolDepthBehaviour)this.target;
-                Debug.Log(pool.GetMaterial(currentLayerAmount));
                 foreach(Transform quad in layer.transform) {
-                    Debug.Log(quad.name);
                     quad.GetComponent<MeshRenderer>().material = pool.GetMaterial(currentLayerAmount);
                 }
-            } else {
+                currentLayerAmount++;
+            }
+            while(this.layerAmount < currentLayerAmount) {
                 GameObject.DestroyImmediate(layersGo.transform.GetChild(currentLayerAmount - 1).gameObject);
+                currentLayerAmount--;
             }
         }
     }

@@ -1,47 +1,21 @@
 ﻿using DG.Tweening;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
     public PoolDepthBehaviour Pool { get => this.pool; }
-    public TextMeshProUGUI Score { get => this.scoreText; }
-    public TextMeshProUGUI Money { get => this.moneyText; }
-    public TextMeshProUGUI Level { get => this.moneyText; }
-
-    public TextMeshProUGUI DigDamage { get => this.digDmgText; }
-    public Slider BreathBar { get => this.breathBar; }
-    public Slider LayerBar { get => this.layerBar; }
     public PlayerBehaviour Player { get => this.player; }
-    public PalierApparition Palier { get => this.palier; }
-    public GameObject Stats { get => this.stats; }
-    public GameObject Store { get => this.store; }
-    public GameObject Digging { get => this.digging; }
-    public Button ClickableArea { get => this.clickableArea; }
+    public EchelonBehaviour Echelons { get => this.echelons; }
     public GameObject WaterPoolGo { get => this.waterPoolGo; }
-    public SwimBehaviour SwimBehaviour { get => this.swimBehaviour; }
     public int MoneyMultiplicator { get => this.moneyMultiplicator; }
-
-
+    public UIHandeler UI { get => this.ui; }
 
     [SerializeField] private PoolDepthBehaviour pool = null;
     [SerializeField] private PlayerBehaviour player = null;
-    [SerializeField] private PalierApparition palier = null;
+    [SerializeField] private EchelonBehaviour echelons = null;
     [SerializeField] private GameObject layerGo = null, waterPoolGo = null;
     [SerializeField] private int moneyMultiplicator = 1;
-
-
-
-    [Header("UI")]
-    [SerializeField] private Button clickableArea = null;
-    [SerializeField] private SwimBehaviour swimBehaviour = null;
-    [Header("TextFields"), Space(-10)]
-    [SerializeField] private TextMeshProUGUI scoreText = null;
-    [SerializeField] private TextMeshProUGUI moneyText = null, digDmgText = null;
-    [SerializeField] private TextMeshProUGUI LevelText = null;
-    [SerializeField] private Slider breathBar = null, layerBar = null;
-    [SerializeField] private GameObject stats = null, store = null, digging = null, autoclick = null;
+    [SerializeField] private UIHandeler ui;
 
 
 
@@ -51,6 +25,7 @@ public class GameManager : MonoBehaviour {
             GameManager.Instance = this;
         } else {
             GameObject.Destroy(this.gameObject);
+            return;
         }
         Application.targetFrameRate = 60;
 
@@ -70,7 +45,7 @@ public class GameManager : MonoBehaviour {
     public void BuyAutoClick(GameObject button) {
         if(this.player.Money >= 25) {
             button.SetActive(false);
-            this.autoclick.SetActive(true);
+            this.ui.Autoclick.SetActive(true);
         }
     }
 
@@ -84,7 +59,6 @@ public class GameManager : MonoBehaviour {
                     break;
                 case BonusTypes.Money:
                     this.moneyMultiplicator += stats.Amount;
-                    //this.player.AddMoney(stats.Amount);
                     break;
                 case BonusTypes.DigStrenght:
                     this.player.AddDigDamage(stats.Amount);
@@ -103,7 +77,7 @@ public class GameManager : MonoBehaviour {
             };
             storeElement.AddPrice = storeElement.AddPrice * 2;
 
-            this.LevelText.text = storeElement.Level.ToString();
+            this.ui.LevelText.text = storeElement.Level.ToString();
 
 
         }

@@ -8,11 +8,8 @@ public class SwimBehaviour : MonoBehaviour {
     [Tooltip("x=>Min y=>Max")]
     [SerializeField] private Vector2 rangeSpawnTime = new Vector2(1f, 3f);
 
-    private void Start() {
-        this.player = GameManager.Instance.Player;
-        this.gameObject.SetActive(false);
-    }
     private void OnEnable() {
+        this.player = GameManager.Instance.Player;
         this.spawnCollectibles = StartCoroutine(SpawnCollectible(this.rangeSpawnTime.x, this.rangeSpawnTime.y));
     }
 
@@ -25,7 +22,7 @@ public class SwimBehaviour : MonoBehaviour {
         while(true) {
             yield return new WaitForSecondsRealtime(Random.Range(min, max));
             this.collectibles.Add(Instantiate(this.bonusPrefabs[0], this.player.transform.position + Vector3.down * 10, Quaternion.identity));
-            print("Spawn Fish");
+            Debug.Log("Spawn <color=blue>Fish</color>");
         }
     }
 

@@ -19,35 +19,35 @@ public class PlayerBehaviour : MonoBehaviour {
     [Header("Player")]
     [SerializeField] private int digDamage = 1;
     [SerializeField] [Min(0)] private int money = 0;
-    [SerializeField] private GameObject shovel = null;
-    [SerializeField] private GameObject fxPrefab = null;
+    [SerializeField] private GameObject shovel;
+    [SerializeField] private GameObject fxPrefab;
     [Header("Walk")]
-    [SerializeField] private WalkingPath walkingPath = null;
+    [SerializeField] private WalkingPath walkingPath;
     [SerializeField] private float pathDuration = 15f;
     [SerializeField] private PathType pathType = PathType.Linear;
 
     [Header("Dive")]
-    [SerializeField] private WalkingPath divingPath = null;
+    [SerializeField] private WalkingPath divingPath;
     [SerializeField] private float divingPathDuration = .56f;
     [SerializeField] private PathType divingPathEase = PathType.Linear;
     [Header("Swim")]
     [SerializeField] private int breathTime = 20;
     [SerializeField] private float swimSpeed = 6f, sideSwimSpeed = 8f;
     private void Start() {
-        this.gameManager = GameManager.Instance;
-        this.swimBehaviour = this.gameManager.SwimBehaviour;
+        this.gm = GameManager.Instance;
+        this.swimBehaviour = this.gm.UI.SwimBehaviour;
         this.animator = GetComponentInChildren<Animator>();
     }
 
     private IEnumerator TimerBreath(float breathTime = 20f) {
-        this.gameManager.UIPanUP(this.gameManager.Digging);
+        this.gm.UIPanUP(this.gm.UI.Digging);
         float timeLeft = breathTime;
-        this.gameManager.BreathBar.maxValue = timeLeft;
-        this.gameManager.BreathBar.value = timeLeft;
+        this.gm.UI.BreathBar.maxValue = timeLeft;
+        this.gm.UI.BreathBar.DOValue(timeLeft, .5f);
         while(timeLeft >= 0) {
-            yield return new WaitForSecondsRealtime(1);
-            this.gameManager.BreathBar.value = timeLeft;
+            this.gm.UI.BreathBar.DOValue(timeLeft, .5f);
             timeLeft--;
+            yield return new WaitForSecondsRealtime(1);
         }
         SetState(PlayerState.GainMoney);
     }
@@ -57,7 +57,9 @@ public class PlayerBehaviour : MonoBehaviour {
         this.transform.DOPath(this.walkingPath.Waypoints, this.pathDuration, this.pathType, PathMode.Sidescroller2D, 10, Color.blue)
              .OnWaypointChange((int index) => {
                  ResetAllBoolAnimator();
-                 if(index == 1) {
+                 if(index == 0) {
+                     this.animator.SetTrigger("Climb");
+                 } else if(index == 1) {
                      this.animator.SetTrigger("Walk");
                  } else if(index == 5) {
                      this.animator.SetTrigger("Climb");
@@ -65,9 +67,7 @@ public class PlayerBehaviour : MonoBehaviour {
                      this.animator.SetTrigger("Walk");
                  }
                  if(index + 1 < this.walkingPath.Waypoints.Length) {
-                     Vector3 towards = new Vector3(this.walkingPath.Waypoints[index + 1].x, this.walkingPath.Waypoints[index].y, this.walkingPath.Waypoints[index + 1].z);
-                     this.transform.DOLookAt(towards, .4f);
-                     Debug.DrawLine(this.walkingPath.Waypoints[index], towards, Color.red, 1f);
+                     this.transform.DOLookAt(this.walkingPath.Waypoints[index + 1], .2f, AxisConstraint.Y, Vector3.up);
                  }
              }
          ).SetEase(Ease.Linear).OnComplete(() => this.animator.SetTrigger("Idle"));
@@ -81,8 +81,8 @@ public class PlayerBehaviour : MonoBehaviour {
 
 
     private void Update() {
-        if(this.state == PlayerState.Swim && this.transform.position.y <= -this.gameManager.Pool.Depth) {
-            this.transform.DOMoveY(-this.gameManager.Pool.Depth, 0, true);
+        if(this.state == PlayerState.Swim && this.transform.position.y <= -this.gm.Pool.Depth) {
+            this.transform.DOMoveY(-this.gm.Pool.Depth, 0, true);
             SetState(PlayerState.Dig);
         }
         if(this.state == PlayerState.Idle) {
@@ -95,21 +95,19 @@ public class PlayerBehaviour : MonoBehaviour {
 
     public void Dive() {
         this.transform.DOPath(this.divingPath.Waypoints, this.divingPathDuration, this.divingPathEase, PathMode.Full3D, 10, Color.blue)
-            .OnWaypointChange((int index) => {
-                if(index + 1 == this.divingPath.Waypoints.Length) {
-                    SetState(PlayerState.Swim);
-                }
-            }).SetEase(Ease.Linear);
+            .OnComplete(() => SetState(PlayerState.Swim)).SetEase(Ease.Linear);
     }
 
     public void Dig(int? digDamage = null) {
         if(!this.hasDug) {
+            print("Has dug for the fiorst time");
             StartCoroutine(TimerBreath(this.breathTime));
-            this.gameManager.WaterPoolGo.SetActive(true);
+            this.gm.WaterPoolGo.SetActive(true);
             this.hasDug = true;
         }
-        PoolDepthBehaviour pool = this.gameManager.Pool;
+        PoolDepthBehaviour pool = this.gm.Pool;
         GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity), 2f);
+        //todo correct audio manager
         FindObjectOfType<AudioManager>().Play("Dig");
         if(pool.Dig(digDamage == null ? this.digDamage : digDamage.Value)) {
             this.dugLayers++;
@@ -122,7 +120,7 @@ public class PlayerBehaviour : MonoBehaviour {
             FindObjectOfType<AudioManager>().Play("calcul");
             yield return new WaitForSecondsRealtime(2f / amount);
             this.dugLayers--;
-            AddMoney(1 * this.gameManager.MoneyMultiplicator);
+            AddMoney(1 * this.gm.MoneyMultiplicator);
         }
         FindObjectOfType<AudioManager>().Stop("calcul");
     }
@@ -133,12 +131,12 @@ public class PlayerBehaviour : MonoBehaviour {
 
     public void AddMoney(int amount) {
         this.money += amount;
-        this.gameManager.Money.text = this.money.ToString();
+        this.gm.UI.ChangeText(this.gm.UI.MoneyText, this.money.ToString());
     }
 
     public void AddDigDamage(int amount) {
         this.digDamage += amount;
-        this.gameManager.DigDamage.text = this.digDamage.ToString();
+        this.gm.UI.ChangeText(this.gm.UI.DigDmgText, this.digDamage.ToString());
     }
 
     public void AddSwimSpeed(int amount) {
@@ -146,7 +144,7 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     public void SetState(PlayerState state) {
-        print($"Changed state from {this.state} to {state}");
+        print($"Changed state from <color=red>{this.state}</color> to <color=green>{state}</color>");
         switch(this.state) {
             case PlayerState.Idle:
                 break;
@@ -158,9 +156,9 @@ public class PlayerBehaviour : MonoBehaviour {
                 ResetAllBoolAnimator();
                 this.animator.SetBool("DigMode", false);
                 this.shovel.transform.DOScale(0, .2f);
-                this.gameManager.UIPanDown(this.gameManager.Digging);
-                this.gameManager.ClickableArea.onClick.RemoveAllListeners();
-                this.gameManager.ClickableArea.interactable = false;
+                this.gm.UIPanDown(this.gm.UI.Digging);
+                //this.gm.UI.ClickableArea.onClick.RemoveAllListeners();
+                this.gm.UI.ClickableArea.gameObject.SetActive(false);
                 if(this.autoclick != null) {
                     StopCoroutine(this.autoclick);
                 }
@@ -171,7 +169,7 @@ public class PlayerBehaviour : MonoBehaviour {
                 GainMoney();
                 break;
             case PlayerState.Buy:
-                this.gameManager.UIPanDown(this.gameManager.Store);
+                this.gm.UIPanDown(this.gm.UI.Store);
                 break;
             default:
                 break;
@@ -185,31 +183,31 @@ public class PlayerBehaviour : MonoBehaviour {
                 StartCoroutine(TimerBreath(this.breathTime));
                 this.swimBehaviour.gameObject.SetActive(true);
                 this.transform.DORotate(new Vector3(180, 135, 0), 0);
+                //todo correct audio manager
                 FindObjectOfType<AudioManager>().Play("Swim");
                 break;
             case PlayerState.Dig:
                 ResetAllBoolAnimator();
                 this.animator.SetBool("DigMode", true);
                 this.shovel.transform.DOScale(1, .2f);
-                this.gameManager.ClickableArea.onClick.AddListener(() => Dig());
-                this.gameManager.ClickableArea.interactable = true;
+                //this.gm.UI.ClickableArea.onClick.AddListener(() => Dig());
+                this.gm.UI.ClickableArea.gameObject.SetActive(true);
                 if(this.isAutoClicker) {
                     this.autoclick = StartCoroutine(AutoClick());
                 }
                 break;
             case PlayerState.GainMoney:
+                //todo system to climb back to the surface
                 this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(() => SetState(PlayerState.Buy)).SetEase(Ease.Linear);
-                Vector3 towards = new Vector3(this.walkingPath.Waypoints[0].x, this.transform.position.y, this.walkingPath.Waypoints[0].z);
-                this.transform.DOLookAt(towards, .4f);
+                this.transform.DOLookAt(this.walkingPath.Waypoints[0], .4f, AxisConstraint.Y);
                 break;
             case PlayerState.Buy:
-                this.animator.SetTrigger("Climb");
                 if(!this.isAutoClicker) {
-                    this.gameManager.UIPanUP(this.gameManager.Store);
+                    this.gm.UIPanUP(this.gm.UI.Store);
                 } else {
                     SetState(PlayerState.Idle);
                 }
-                GameManager.Instance.Palier.CheckPalier();
+                this.gm.Echelons.CheckEchelons();
                 break;
             default:
                 break;
@@ -218,7 +216,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         GameObject.Destroy(other.gameObject);
-        AddMoney(1 * this.gameManager.MoneyMultiplicator);
+        AddMoney(1 * this.gm.MoneyMultiplicator);
     }
 
     public void ToggleAutoLock() {
@@ -254,15 +252,15 @@ public class PlayerBehaviour : MonoBehaviour {
         }
     }
 
-    private Animator animator = null;
+    private Animator animator;
     private PlayerState state = PlayerState.Dig;
-    private SwimBehaviour swimBehaviour = null;
-    private GameManager gameManager = null;
-    private int dugLayers = 0;
-    private bool hasDug = false;
+    private SwimBehaviour swimBehaviour;
+    private GameManager gm;
+    private int dugLayers;
+    private bool hasDug;
 
     //autoclicker fields
-    private Coroutine autoclick = null;
+    private Coroutine autoclick;
 
 }
 public enum PlayerState { Idle, Swim, Dig, GainMoney, Buy }
