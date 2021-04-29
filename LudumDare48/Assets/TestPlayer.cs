@@ -13,7 +13,7 @@ public class TestPlayer : MonoBehaviour {
 
     // Update is called once per frame
     private void Update() {
-        if(Input.GetKey(KeyCode.Space)) {
+        if(Input.GetKey(KeyCode.Space) || Input.touchCount > 0) {
             this.text.text = (int.Parse(this.text.text) + 1).ToString();
             this.text.transform.DOComplete();
             this.text.DOComplete();

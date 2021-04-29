@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
             return;
         }
         Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 60;
 
 #if UNITY_EDITOR
         if(this.player == null) {
