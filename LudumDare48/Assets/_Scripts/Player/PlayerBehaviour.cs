@@ -214,10 +214,10 @@ public class PlayerBehaviour : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        GameObject.Destroy(other.gameObject);
-        AddMoney(1 * this.gm.MoneyMultiplicator);
-    }
+    //private void OnTriggerEnter(Collider other) {
+    //    GameObject.Destroy(other.gameObject);
+    //    AddMoney(1 * this.gm.MoneyMultiplicator);
+    //}
 
     public void ToggleAutoLock() {
         SetAutoClicker(!this.isAutoClicker);

@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour {
             GameObject.Destroy(this.gameObject);
             return;
         }
-        Application.targetFrameRate = 60;
-        QualitySettings.vSyncCount = 60;
+        Application.targetFrameRate = 120;
+        //QualitySettings.vSyncCount = 60;
 
 #if UNITY_EDITOR
         if(this.player == null) {
