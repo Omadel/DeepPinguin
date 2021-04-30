@@ -22,6 +22,9 @@ public class PoolDepthEditor : Editor {
 
     public override void OnInspectorGUI() {
         // this.layerAmount = (int)GUILayout.HorizontalSlider(this.layerAmount, 0, 20);
+        if(GUILayout.Button("Fix Depth")) {
+            HandlePoolDepth();
+        }
         if(GUILayout.Button("Spawn Layers")) {
             HandleLayerAmount();
         }
@@ -33,7 +36,7 @@ public class PoolDepthEditor : Editor {
     }
 
     private void OnSceneGUI() {
-        HandlePoolDepth();
+        //HandlePoolDepth();
         //HandleLayerAmount();
     }
 
@@ -62,6 +65,7 @@ public class PoolDepthEditor : Editor {
     private void HandlePoolDepth() {
         GameObject depthGo = (GameObject)this.depth.objectReferenceValue;
         if(depthGo != null) {
+            depthGo.transform.Find("WaterTop").gameObject.SetActive(this.poolDepth.intValue > 0);
             depthGo.transform.localScale = new Vector3(depthGo.transform.localScale.x, Mathf.Max(.001f, this.poolDepth.intValue), depthGo.transform.localScale.z);
             GameObject layersGo = (GameObject)this.layers.objectReferenceValue;
             if(layersGo != null) {

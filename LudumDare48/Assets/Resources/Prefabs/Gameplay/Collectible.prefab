@@ -64,17 +64,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19f917b7aed64f4bad5b65a0682c8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationDelay: 0.01
-  animationTimer: 0.2
-  animationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  animationEase: 6
+  animationParameters: {fileID: 11400000, guid: f56141a392efdfd4cb2bf5a2fd3223a2,
+    type: 2}
   fxPrefab: {fileID: 2489673246122692382, guid: 10e544a7f503a004ba8586919a7bc59f,
     type: 3}
+  stayActivatedOnAwake: 1
 --- !u!135 &5896772282089829095
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -128,6 +122,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4216859302048453862, guid: 70b3f686a9ce95840ae89e81a2c20762,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 70b3f686a9ce95840ae89e81a2c20762,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -143,6 +142,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 70b3f686a9ce95840ae89e81a2c20762,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.4077737
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 70b3f686a9ce95840ae89e81a2c20762,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -155,16 +159,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 70b3f686a9ce95840ae89e81a2c20762,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.4077737
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 70b3f686a9ce95840ae89e81a2c20762,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 70b3f686a9ce95840ae89e81a2c20762,
         type: 3}

@@ -84,8 +84,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void SetPlayerState(int stateIndex) => this.player.SetState((PlayerState)stateIndex);
-    public void SetPlayerState(string stateString) => this.player.SetState((PlayerState)System.Enum.Parse(typeof(PlayerState), stateString));
+    public void SetPlayerState(int stateIndex) => this.player.ChangeState((PlayerState)stateIndex);
+    public void SetPlayerState(string stateString) => this.player.ChangeState((PlayerState)System.Enum.Parse(typeof(PlayerState), stateString));
 
     public void UIShow(GameObject UIGameObject) => UIGameObject.SetActive(true);
     public void UIHide(GameObject UIGameObject) => UIGameObject.SetActive(false);
@@ -104,4 +104,5 @@ public class GameManager : MonoBehaviour {
             UIHide(UIGameObject);
         });
     }
+
 }

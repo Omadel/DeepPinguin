@@ -1,29 +1,49 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SwimBehaviour : MonoBehaviour {
 
     [SerializeField] private GameObject[] bonusPrefabs = null;
     [Tooltip("x=>Min y=>Max")]
-    [SerializeField] private Vector2 rangeSpawnTime = new Vector2(1f, 3f);
+    [SerializeField] private Vector2 rangeSpawnTime = new Vector2(1f, 3f), spawnRange = new Vector2(1, 7.5f);
+    [SerializeField] private float distanceSpawnedFromPlayer = 10f;
+
+    private void Awake() {
+        this.player = GameManager.Instance.Player;
+        this.sphereCollider = this.player.GetComponent<SphereCollider>();
+    }
 
     private void OnEnable() {
-        this.player = GameManager.Instance.Player;
         this.spawnCollectibles = StartCoroutine(SpawnCollectible(this.rangeSpawnTime.x, this.rangeSpawnTime.y));
+        this.sphereCollider.enabled = true;
+        this.rb = this.player.gameObject.AddComponent<Rigidbody>();
+        this.rb.useGravity = false;
+        this.rb.isKinematic = true;
     }
 
     private void OnDisable() {
-        StopCoroutine(this.spawnCollectibles);
+        if(this.spawnCollectibles != null) {
+            StopCoroutine(this.spawnCollectibles);
+        }
         this.moveDir = Vector3.zero;
+        this.sphereCollider.enabled = false;
+        GameObject.Destroy(this.rb);
+        this.rb = null;
     }
 
     private IEnumerator SpawnCollectible(float min, float max) {
-        while(true) {
+        while(this.player.gameObject.transform.position.y > -GameManager.Instance.Pool.Depth + this.distanceSpawnedFromPlayer + 5) {
             yield return new WaitForSecondsRealtime(Random.Range(min, max));
-            this.collectibles.Add(Instantiate(this.bonusPrefabs[0], this.player.transform.position + Vector3.down * 10, Quaternion.identity));
-            Debug.Log("Spawn <color=blue>Fish</color>");
+            Vector3 offset = GetSpawnPos(this.spawnRange.x, this.spawnRange.y);
+            Instantiate(this.bonusPrefabs[0], new Vector3(offset.x, this.player.transform.position.y - this.distanceSpawnedFromPlayer, offset.z), Quaternion.identity);
         }
+    }
+
+    private Vector3 GetSpawnPos(float min, float max) {
+        float tmp = Random.Range(min, max);
+        float mult = (tmp - min) / (max - min);
+        float tmp2 = (max - min) * (1 - mult) + min;
+        return new Vector3(tmp, 0, -tmp2);
     }
 
     private void Update() {
@@ -32,6 +52,9 @@ public class SwimBehaviour : MonoBehaviour {
             this.player.transform.position = newPos;
         }
         this.player.transform.position += Vector3.down * this.player.SwimSpeed * Time.deltaTime;
+        if(this.player.transform.position.y <= -GameManager.Instance.Pool.Depth) {
+            this.player.ChangeState(PlayerState.Dig);
+        }
     }
 
     public void SetDirection(string direction) {
@@ -48,11 +71,11 @@ public class SwimBehaviour : MonoBehaviour {
             default:
                 break;
         }
-        print(direction);
     }
 
-    private List<GameObject> collectibles = new List<GameObject>();
     private Coroutine spawnCollectibles;
     private Vector3 moveDir = Vector3.zero;
     private PlayerBehaviour player = null;
+    private Rigidbody rb;
+    private SphereCollider sphereCollider;
 }

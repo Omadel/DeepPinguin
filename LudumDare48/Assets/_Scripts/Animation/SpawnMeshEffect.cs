@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnMeshEffect : MonoBehaviour {
     [SerializeField] private AnimationParametersScriptableObject animationParameters;
     [SerializeField] private GameObject fxPrefab = null;
+    [SerializeField] private bool stayActivatedOnAwake = false;
 
 
     private void Awake() {
@@ -13,7 +14,9 @@ public class SpawnMeshEffect : MonoBehaviour {
                 Instantiate(this.fxPrefab, new Vector3(child.position.x, child.transform.position.y, child.transform.position.z), Quaternion.identity, child.transform);
             }
         }
-        this.gameObject.SetActive(false);
+        if(!this.stayActivatedOnAwake) {
+            this.gameObject.SetActive(false);
+        }
     }
 
     private void OnEnable() {

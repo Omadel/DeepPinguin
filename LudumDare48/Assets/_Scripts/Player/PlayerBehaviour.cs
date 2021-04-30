@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(DigBehaviour))]
 public class PlayerBehaviour : MonoBehaviour {
 
     public int DigDamage { get => this.digDamage; set => this.digDamage = value; }
@@ -10,6 +11,7 @@ public class PlayerBehaviour : MonoBehaviour {
     public float SwimSpeed { get => this.swimSpeed; }
     public float SideSwimSpeed { get => this.sideSwimSpeed; }
     public PlayerState State { get => this.state; }
+    public GameObject Shovel { get => this.shovel; }
 
     private bool isAutoClicker = false;
     [Header("Auto clicker")]
@@ -36,7 +38,23 @@ public class PlayerBehaviour : MonoBehaviour {
     private void Start() {
         this.gm = GameManager.Instance;
         this.swimBehaviour = this.gm.UI.SwimBehaviour;
+        this.ploufVFX = LoadVFX("VFX_Plouf", true, false, this.transform.position);
+        this.bubblesVFX = LoadVFX("VFX_Bubbles", true, false, this.transform.position + Vector3.up, this.transform);
+        this.finsVFX = LoadVFX("VFX_Fins", true, false, this.transform.position, this.transform);
+        this.digBehaviour = GetComponent<DigBehaviour>();
         this.animator = GetComponentInChildren<Animator>();
+        if(this.gm.Pool.Depth > 0) {
+            this.gm.WaterPoolGo.SetActive(true);
+        }
+    }
+
+    private GameObject LoadVFX(string vfxName, bool instantiate = false, bool spawnActivated = false, Vector3? position = null, Transform parent = null) {
+        GameObject vfx = Resources.Load($"Prefabs/VFX/{vfxName}") as GameObject;
+        if(instantiate) {
+            vfx = Instantiate(vfx, position.Value, Quaternion.identity, parent);
+            vfx.SetActive(spawnActivated);
+        }
+        return vfx;
     }
 
     private IEnumerator TimerBreath(float breathTime = 20f) {
@@ -49,10 +67,10 @@ public class PlayerBehaviour : MonoBehaviour {
             timeLeft--;
             yield return new WaitForSecondsRealtime(1);
         }
-        SetState(PlayerState.GainMoney);
+        ChangeState(PlayerState.SwimBackUp);
     }
 
-    private void GainMoney() {
+    private void WalkAlongPath() {
         StartCoroutine(SetScore(this.dugLayers));
         this.transform.DOPath(this.walkingPath.Waypoints, this.pathDuration, this.pathType, PathMode.Sidescroller2D, 10, Color.blue)
              .OnWaypointChange((int index) => {
@@ -61,6 +79,8 @@ public class PlayerBehaviour : MonoBehaviour {
                      this.animator.SetTrigger("Climb");
                  } else if(index == 1) {
                      this.animator.SetTrigger("Walk");
+                 } else if(index == 4) {
+                     //this.gm.UIPanUP(this.gm.UI.Store);
                  } else if(index == 5) {
                      this.animator.SetTrigger("Climb");
                  } else if(index == 6) {
@@ -70,7 +90,7 @@ public class PlayerBehaviour : MonoBehaviour {
                      this.transform.DOLookAt(this.walkingPath.Waypoints[index + 1], .2f, AxisConstraint.Y, Vector3.up);
                  }
              }
-         ).SetEase(Ease.Linear).OnComplete(() => this.animator.SetTrigger("Idle"));
+         ).SetEase(Ease.Linear).OnComplete(() => ChangeState(PlayerState.Idle));
     }
 
     private void ResetAllBoolAnimator() {
@@ -80,30 +100,17 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
 
-    private void Update() {
-        if(this.state == PlayerState.Swim && this.transform.position.y <= -this.gm.Pool.Depth) {
-            this.transform.DOMoveY(-this.gm.Pool.Depth, 0, true);
-            SetState(PlayerState.Dig);
-        }
-        if(this.state == PlayerState.Idle) {
-            if((Input.GetMouseButtonDown(0) || Input.touchCount > 0) || this.isAutoClicker) {
-                ResetAllBoolAnimator();
-                this.animator.SetTrigger("Dive");
-            }
-        }
-    }
-
     public void Dive() {
         this.transform.DOPath(this.divingPath.Waypoints, this.divingPathDuration, this.divingPathEase, PathMode.Full3D, 10, Color.blue)
-            .OnComplete(() => SetState(PlayerState.Swim)).SetEase(Ease.Linear);
+            .OnComplete(() => ChangeState(PlayerState.SwimDown)).SetEase(Ease.Linear);
     }
 
     public void Dig(int? digDamage = null) {
-        if(!this.hasDug) {
-            print("Has dug for the fiorst time");
+        if(this.gm.Pool.Depth == 0) {
+            print("Has dug for the first time");
             StartCoroutine(TimerBreath(this.breathTime));
             this.gm.WaterPoolGo.SetActive(true);
-            this.hasDug = true;
+            this.bubblesVFX.SetActive(true);
         }
         PoolDepthBehaviour pool = this.gm.Pool;
         GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity), 2f);
@@ -143,33 +150,31 @@ public class PlayerBehaviour : MonoBehaviour {
         this.swimSpeed += amount;
     }
 
-    public void SetState(PlayerState state) {
+    public void ChangeState(PlayerState state) {
         print($"Changed state from <color=red>{this.state}</color> to <color=green>{state}</color>");
+        ResetAllBoolAnimator();
         switch(this.state) {
             case PlayerState.Idle:
+                this.gm.UI.ClickableArea.gameObject.SetActive(false);
+                this.gm.UI.ClickableArea.onClick.RemoveAllListeners();
                 break;
-            case PlayerState.Swim:
+            case PlayerState.SwimDown:
                 this.transform.DORotate(new Vector3(0, 135, 0), 0);
                 this.swimBehaviour.gameObject.SetActive(false);
+                this.ploufVFX.SetActive(false);
+                this.finsVFX.SetActive(false);
                 break;
             case PlayerState.Dig:
-                ResetAllBoolAnimator();
-                this.animator.SetBool("DigMode", false);
-                this.shovel.transform.DOScale(0, .2f);
-                this.gm.UIPanDown(this.gm.UI.Digging);
-                //this.gm.UI.ClickableArea.onClick.RemoveAllListeners();
-                this.gm.UI.ClickableArea.gameObject.SetActive(false);
-                if(this.autoclick != null) {
-                    StopCoroutine(this.autoclick);
-                }
+                this.digBehaviour.enabled = false;
+                //todo autoclick
+                //if(this.autoclick != null) {
+                //    StopCoroutine(this.autoclick);
+                //}
                 break;
+            case PlayerState.SwimBackUp:
 
-
-            case PlayerState.GainMoney:
-                GainMoney();
                 break;
-            case PlayerState.Buy:
-                this.gm.UIPanDown(this.gm.UI.Store);
+            case PlayerState.Walk:
                 break;
             default:
                 break;
@@ -177,47 +182,48 @@ public class PlayerBehaviour : MonoBehaviour {
         this.state = state;
         switch(state) {
             case PlayerState.Idle:
+                this.animator.SetTrigger("Idle");
+                this.gm.UI.ClickableArea.gameObject.SetActive(true);
+                this.gm.UI.ClickableArea.onClick.AddListener(() => this.animator.SetTrigger("Dive"));
                 break;
-            case PlayerState.Swim:
-                ResetAllBoolAnimator();
+            case PlayerState.SwimDown:
                 StartCoroutine(TimerBreath(this.breathTime));
                 this.swimBehaviour.gameObject.SetActive(true);
                 this.transform.DORotate(new Vector3(180, 135, 0), 0);
+                this.ploufVFX.SetActive(true);
+                this.bubblesVFX.SetActive(true);
+                this.finsVFX.SetActive(true);
                 //todo correct audio manager
                 FindObjectOfType<AudioManager>().Play("Swim");
                 break;
             case PlayerState.Dig:
-                ResetAllBoolAnimator();
-                this.animator.SetBool("DigMode", true);
-                this.shovel.transform.DOScale(1, .2f);
-                //this.gm.UI.ClickableArea.onClick.AddListener(() => Dig());
-                this.gm.UI.ClickableArea.gameObject.SetActive(true);
-                if(this.isAutoClicker) {
-                    this.autoclick = StartCoroutine(AutoClick());
-                }
+                this.digBehaviour.enabled = true;
+                //todo autoclicker
+                //if(this.isAutoClicker) {
+                //    this.autoclick = StartCoroutine(AutoClick());
+                //}
                 break;
-            case PlayerState.GainMoney:
+            case PlayerState.SwimBackUp:
                 //todo system to climb back to the surface
-                this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(() => SetState(PlayerState.Buy)).SetEase(Ease.Linear);
+                this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(() => ChangeState(PlayerState.Walk)).SetEase(Ease.Linear);
                 this.transform.DOLookAt(this.walkingPath.Waypoints[0], .4f, AxisConstraint.Y);
+                this.finsVFX.SetActive(true);
+                this.bubblesVFX.SetActive(false);
                 break;
-            case PlayerState.Buy:
-                if(!this.isAutoClicker) {
-                    this.gm.UIPanUP(this.gm.UI.Store);
-                } else {
-                    SetState(PlayerState.Idle);
-                }
+            case PlayerState.Walk:
+                WalkAlongPath();
                 this.gm.Echelons.CheckEchelons();
+                this.finsVFX.SetActive(false);
                 break;
             default:
                 break;
         }
     }
 
-    //private void OnTriggerEnter(Collider other) {
-    //    GameObject.Destroy(other.gameObject);
-    //    AddMoney(1 * this.gm.MoneyMultiplicator);
-    //}
+    private void OnTriggerEnter(Collider other) {
+        GameObject.Destroy(other.gameObject);
+        AddMoney(1 * this.gm.MoneyMultiplicator);
+    }
 
     public void ToggleAutoLock() {
         SetAutoClicker(!this.isAutoClicker);
@@ -255,12 +261,13 @@ public class PlayerBehaviour : MonoBehaviour {
     private Animator animator;
     private PlayerState state = PlayerState.Dig;
     private SwimBehaviour swimBehaviour;
+    private DigBehaviour digBehaviour;
     private GameManager gm;
     private int dugLayers;
-    private bool hasDug;
+    private GameObject ploufVFX, bubblesVFX, finsVFX;
 
     //autoclicker fields
     private Coroutine autoclick;
 
 }
-public enum PlayerState { Idle, Swim, Dig, GainMoney, Buy }
+public enum PlayerState { Idle, SwimDown, Dig, SwimBackUp, Walk }

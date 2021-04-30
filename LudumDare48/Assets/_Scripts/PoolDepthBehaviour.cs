@@ -25,8 +25,6 @@ public class PoolDepthBehaviour : MonoBehaviour {
     }
 
     public bool Dig(int damage) {
-        //todo check why its going form 0 to two
-        Debug.Log($"dig {damage}");
         this.layerHealth -= damage;
         GameManager gm = GameManager.Instance;
         gm.UI.PlayHurtLayerBarAnimation(this.layerHealth, this.layerHurtColor);
