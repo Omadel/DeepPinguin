@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Scene_Rom1.unity
     guid: 178376a2affc5c942ab05ec3cff393d7
   - enabled: 1
-    path: Assets/Scenes/Scene_Rom1 1.unity
+    path: Assets/Scenes/Scene_Rom1 mobile.unity
     guid: 3592ac3d39f87ae4cbf7da724787abdc
   m_configObjects: {}
