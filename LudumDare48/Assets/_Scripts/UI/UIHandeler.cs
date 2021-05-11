@@ -17,6 +17,8 @@ public class UIHandeler : MonoBehaviour {
     public GameObject Store { get => this.store; }
     public GameObject Digging { get => this.digging; }
     public GameObject Autoclick { get => this.autoclick; }
+    public GameObject BuyAC { get => this.buyAC; }
+    public GameObject[] ACParameters { get => this.aCParameters; }
 
     [Header("Gameplay")]
     [SerializeField] private Button clickableArea;
@@ -35,6 +37,9 @@ public class UIHandeler : MonoBehaviour {
     [SerializeField] private GameObject store;
     [SerializeField] private GameObject digging;
     [SerializeField] private GameObject autoclick;
+    [Header("Store")]
+    [SerializeField] private GameObject buyAC;
+    [SerializeField] private GameObject[] aCParameters;
 
     private void Start() {
         this.layerBarImage = this.layerBar.GetComponentsInChildren<Image>()[1];
@@ -48,6 +53,9 @@ public class UIHandeler : MonoBehaviour {
         this.digDmgText.text = gm.Player.DigDamage.ToString();
         //this.levelText.text;
         this.echelonsText.text = gm.Echelons.Current.ToString();
+        TextMeshProUGUI[] texts = this.Autoclick.GetComponentsInChildren<TextMeshProUGUI>(true);
+        texts[1].text = $"{gm.Player.AutoClickerFrequency * 1000f} ms";
+        texts[2].text = gm.Player.AutoClickerDigDamage.ToString();
     }
 
     public void ChangeText(TextMeshProUGUI textMeshPro, string text, Color? color = null) {
@@ -78,6 +86,9 @@ public class UIHandeler : MonoBehaviour {
 
     public void UpdateLayerBar(int poolDepth) {
         this.layerBar.maxValue = poolDepth;
+        this.layerBar.value = 0;
+        this.layerBar.DOComplete();
+        this.layerBar.DOValue(this.layerBar.maxValue, .2f);
         ChangeText(this.scoreText, poolDepth.ToString());
     }
 

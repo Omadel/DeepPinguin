@@ -37,9 +37,9 @@ public class PoolDepthBehaviour : MonoBehaviour {
             this.poolDepth++;
             this.depth.transform.DOScaleY(Mathf.Max(.001f, this.poolDepth), this.digDuration).SetEase(this.digEase);
             this.layers.transform.DOLocalMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);
-            this.layerHealth = this.poolDepth;
             gm.UI.UpdateLayerBar(this.poolDepth);
             gm.Player.transform.DOMoveY(-this.poolDepth, this.digDuration).SetEase(this.digEase);
+            this.layerHealth = this.poolDepth;
             return true;
         }
         return false;

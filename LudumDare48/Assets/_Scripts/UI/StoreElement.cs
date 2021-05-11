@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class StoreElement : MonoBehaviour {
 
@@ -10,6 +11,22 @@ public class StoreElement : MonoBehaviour {
         this.texts = GetComponentsInChildren<TMPro.TextMeshProUGUI>();
         RefreshText(this.stats.Name, this.stats.Cost.ToString());
     }
+
+    public void Disable() {
+        this.transform.localScale = Vector3.one;
+        this.transform.DOScale(0, .2f).OnComplete(() => this.gameObject.SetActive(false));
+    }
+
+    private void OnEnable() {
+        this.transform.localScale = Vector3.zero;
+        this.transform.DOScale(1, .2f);
+        this.transform.parent.parent.GetComponent<StoreBehaviour>().RefreshSize();
+    }
+
+    private void OnDisable() {
+        this.transform.parent.parent.GetComponent<StoreBehaviour>().RefreshSize();
+    }
+
 
     private void RefreshText(string name, string cost) {
         this.texts[0].text = name;

@@ -18,9 +18,7 @@ public class TestPlayer : MonoBehaviour {
     private IEnumerator bonjour() {
         while(true) {
             float tmp = Random.Range(this.range.x, this.range.y);
-            float mult = (tmp - this.range.x) / (this.range.y - this.range.x);
-            float tmp2 = (this.range.y - this.range.x) * (1 - mult) + this.range.x;
-            this.spawnPos = new Vector3(tmp, mult, -tmp2);
+            this.spawnPos = new Vector3(tmp, 0, -(this.range.y + this.range.x - tmp));
 
             yield return new WaitForSecondsRealtime(this.refresh);
         }

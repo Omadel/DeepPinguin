@@ -35,15 +35,13 @@ public class SwimBehaviour : MonoBehaviour {
         while(this.player.gameObject.transform.position.y > -GameManager.Instance.Pool.Depth + this.distanceSpawnedFromPlayer + 5) {
             yield return new WaitForSecondsRealtime(Random.Range(min, max));
             Vector3 offset = GetSpawnPos(this.spawnRange.x, this.spawnRange.y);
-            Instantiate(this.bonusPrefabs[0], new Vector3(offset.x, this.player.transform.position.y - this.distanceSpawnedFromPlayer, offset.z), Quaternion.identity);
+            Instantiate(this.bonusPrefabs[0], Vector3.up * this.player.transform.position.y + offset + Vector3.down * this.distanceSpawnedFromPlayer, Quaternion.identity);
         }
     }
 
     private Vector3 GetSpawnPos(float min, float max) {
         float tmp = Random.Range(min, max);
-        float mult = (tmp - min) / (max - min);
-        float tmp2 = (max - min) * (1 - mult) + min;
-        return new Vector3(tmp, 0, -tmp2);
+        return new Vector3(tmp, 0, -(max + min - tmp));
     }
 
     private void Update() {

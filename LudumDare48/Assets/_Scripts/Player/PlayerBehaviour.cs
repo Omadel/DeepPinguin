@@ -5,18 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(DigBehaviour))]
 public class PlayerBehaviour : MonoBehaviour {
 
-    public int DigDamage { get => this.digDamage; set => this.digDamage = value; }
-    public int Money { get => this.money; set => this.money = value; }
-    public int BreathTime { get => this.breathTime; set => this.breathTime = value; }
-    public float SwimSpeed { get => this.swimSpeed; }
-    public float SideSwimSpeed { get => this.sideSwimSpeed; }
-    public PlayerState State { get => this.state; }
-    public GameObject Shovel { get => this.shovel; }
+    public int DigDamage { get => digDamage; set => digDamage = value; }
+    public int Money { get => money; set => money = value; }
+    public int BreathTime { get => breathTime; set => breathTime = value; }
+    public float SwimSpeed { get => swimSpeed; }
+    public float SideSwimSpeed { get => sideSwimSpeed; }
+    public PlayerState State { get => state; }
+    public GameObject Shovel { get => shovel; }
+    public bool IsAutoCliker { get => isAutoCliker; }
+    public int AutoClickerDigDamage { get => aCDigDamage; }
+    public float AutoClickerFrequency { get => aCFrequency; }
 
-    private bool isAutoClicker = false;
     [Header("Auto clicker")]
-    [SerializeField] private int autoClickerDigDamage = 0;
-    [SerializeField] private float autoClickerFrequency = 3f;
+    [SerializeField] private int aCDigDamage = 0;
+    [SerializeField] private float aCFrequency = 3f;
 
     [Header("Player")]
     [SerializeField] private int digDamage = 1;
@@ -24,27 +26,28 @@ public class PlayerBehaviour : MonoBehaviour {
     [SerializeField] private GameObject shovel;
     [SerializeField] private GameObject fxPrefab;
     [Header("Walk")]
-    [SerializeField] private WalkingPath walkingPath;
+    [SerializeField] private Etienne.Path walkingPath;
     [SerializeField] private float pathDuration = 15f;
     [SerializeField] private PathType pathType = PathType.Linear;
 
     [Header("Dive")]
-    [SerializeField] private WalkingPath divingPath;
+    [SerializeField] private Etienne.Path divingPath;
     [SerializeField] private float divingPathDuration = .56f;
     [SerializeField] private PathType divingPathEase = PathType.Linear;
     [Header("Swim")]
     [SerializeField] private int breathTime = 20;
     [SerializeField] private float swimSpeed = 6f, sideSwimSpeed = 8f;
+
     private void Start() {
-        this.gm = GameManager.Instance;
-        this.swimBehaviour = this.gm.UI.SwimBehaviour;
-        this.ploufVFX = LoadVFX("VFX_Plouf", true, false, this.transform.position);
-        this.bubblesVFX = LoadVFX("VFX_Bubbles", true, false, this.transform.position + Vector3.up, this.transform);
-        this.finsVFX = LoadVFX("VFX_Fins", true, false, this.transform.position, this.transform);
-        this.digBehaviour = GetComponent<DigBehaviour>();
-        this.animator = GetComponentInChildren<Animator>();
-        if(this.gm.Pool.Depth > 0) {
-            this.gm.WaterPoolGo.SetActive(true);
+        gm = GameManager.Instance;
+        swimBehaviour = gm.UI.SwimBehaviour;
+        ploufVFX = LoadVFX("VFX_Plouf", true, false, transform.position);
+        bubblesVFX = LoadVFX("VFX_Bubbles", true, false, transform.position + Vector3.up, transform);
+        finsVFX = LoadVFX("VFX_Fins", true, false, transform.position, transform);
+        digBehaviour = GetComponent<DigBehaviour>();
+        animator = GetComponentInChildren<Animator>();
+        if(gm.Pool.Depth > 0) {
+            gm.WaterPoolGo.SetActive(true);
         }
     }
 
@@ -58,12 +61,12 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     private IEnumerator TimerBreath(float breathTime = 20f) {
-        this.gm.UIPanUP(this.gm.UI.Digging);
+        gm.UIPanUP(gm.UI.Digging);
         float timeLeft = breathTime;
-        this.gm.UI.BreathBar.maxValue = timeLeft;
-        this.gm.UI.BreathBar.DOValue(timeLeft, .5f);
+        gm.UI.BreathBar.maxValue = timeLeft;
+        gm.UI.BreathBar.DOValue(timeLeft, .5f);
         while(timeLeft >= 0) {
-            this.gm.UI.BreathBar.DOValue(timeLeft, .5f);
+            gm.UI.BreathBar.DOValue(timeLeft, .5f);
             timeLeft--;
             yield return new WaitForSecondsRealtime(1);
         }
@@ -71,83 +74,83 @@ public class PlayerBehaviour : MonoBehaviour {
     }
 
     private void WalkAlongPath() {
-        StartCoroutine(SetScore(this.dugLayers));
-        this.transform.DOPath(this.walkingPath.Waypoints, this.pathDuration, this.pathType, PathMode.Sidescroller2D, 10, Color.blue)
+        StartCoroutine(SetScore(dugLayers));
+        transform.DOPath(walkingPath.WorldWaypoints, pathDuration, pathType, PathMode.Sidescroller2D, 10, Color.blue)
              .OnWaypointChange((int index) => {
                  ResetAllBoolAnimator();
                  if(index == 0) {
-                     this.animator.SetTrigger("Climb");
+                     animator.SetTrigger("Climb");
                  } else if(index == 1) {
-                     this.animator.SetTrigger("Walk");
+                     animator.SetTrigger("Walk");
                  } else if(index == 4) {
                      //this.gm.UIPanUP(this.gm.UI.Store);
                  } else if(index == 5) {
-                     this.animator.SetTrigger("Climb");
+                     animator.SetTrigger("Climb");
                  } else if(index == 6) {
-                     this.animator.SetTrigger("Walk");
+                     animator.SetTrigger("Walk");
                  }
-                 if(index + 1 < this.walkingPath.Waypoints.Length) {
-                     this.transform.DOLookAt(this.walkingPath.Waypoints[index + 1], .2f, AxisConstraint.Y, Vector3.up);
+                 if(index + 1 < walkingPath.WorldWaypoints.Length) {
+                     transform.DOLookAt(walkingPath.WorldWaypoints[index + 1], .2f, AxisConstraint.Y, Vector3.up);
                  }
              }
          ).SetEase(Ease.Linear).OnComplete(() => ChangeState(PlayerState.Idle));
     }
 
     private void ResetAllBoolAnimator() {
-        foreach(AnimatorControllerParameter parameter in this.animator.parameters) {
-            this.animator.SetBool(parameter.name, false);
+        foreach(AnimatorControllerParameter parameter in animator.parameters) {
+            animator.SetBool(parameter.name, false);
         }
     }
 
 
     public void Dive() {
-        this.transform.DOPath(this.divingPath.Waypoints, this.divingPathDuration, this.divingPathEase, PathMode.Full3D, 10, Color.blue)
+        transform.DOPath(divingPath.WorldWaypoints, divingPathDuration, divingPathEase, PathMode.Full3D, 10, Color.blue)
             .OnComplete(() => ChangeState(PlayerState.SwimDown)).SetEase(Ease.Linear);
     }
 
     public void Dig(int? digDamage = null) {
-        if(this.gm.Pool.Depth == 0) {
+        if(gm.Pool.Depth == 0) {
             print("Has dug for the first time");
-            StartCoroutine(TimerBreath(this.breathTime));
-            this.gm.WaterPoolGo.SetActive(true);
-            this.bubblesVFX.SetActive(true);
+            StartCoroutine(TimerBreath(breathTime));
+            gm.WaterPoolGo.SetActive(true);
+            bubblesVFX.SetActive(true);
         }
-        PoolDepthBehaviour pool = this.gm.Pool;
-        GameObject.Destroy(Instantiate(this.fxPrefab, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity), 2f);
+        PoolDepthBehaviour pool = gm.Pool;
+        GameObject.Destroy(Instantiate(fxPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity), 2f);
         //todo correct audio manager
         FindObjectOfType<AudioManager>().Play("Dig");
         if(pool.Dig(digDamage == null ? this.digDamage : digDamage.Value)) {
-            this.dugLayers++;
+            dugLayers++;
         }
-        this.animator.SetTrigger("Dig");
+        animator.SetTrigger("Dig");
     }
 
     private IEnumerator SetScore(int amount) {
-        while(this.dugLayers > 0) {
-            FindObjectOfType<AudioManager>().Play("calcul");
+        FindObjectOfType<AudioManager>().Play("calcul");
+        while(dugLayers > 0) {
             yield return new WaitForSecondsRealtime(2f / amount);
-            this.dugLayers--;
-            AddMoney(1 * this.gm.MoneyMultiplicator);
+            dugLayers--;
+            AddMoney(1 * gm.MoneyMultiplicator);
         }
         FindObjectOfType<AudioManager>().Stop("calcul");
     }
 
     public void AddBreathTime(int amount) {
-        this.breathTime += amount;
+        breathTime += amount;
     }
 
     public void AddMoney(int amount) {
-        this.money += amount;
-        this.gm.UI.ChangeText(this.gm.UI.MoneyText, this.money.ToString());
+        money += amount;
+        gm.UI.ChangeText(gm.UI.MoneyText, money.ToString());
     }
 
     public void AddDigDamage(int amount) {
-        this.digDamage += amount;
-        this.gm.UI.ChangeText(this.gm.UI.DigDmgText, this.digDamage.ToString());
+        digDamage += amount;
+        gm.UI.ChangeText(gm.UI.DigDmgText, digDamage.ToString());
     }
 
     public void AddSwimSpeed(int amount) {
-        this.swimSpeed += amount;
+        swimSpeed += amount;
     }
 
     public void ChangeState(PlayerState state) {
@@ -155,21 +158,17 @@ public class PlayerBehaviour : MonoBehaviour {
         ResetAllBoolAnimator();
         switch(this.state) {
             case PlayerState.Idle:
-                this.gm.UI.ClickableArea.gameObject.SetActive(false);
-                this.gm.UI.ClickableArea.onClick.RemoveAllListeners();
+                gm.UI.ClickableArea.gameObject.SetActive(false);
+                gm.UI.ClickableArea.onClick.RemoveAllListeners();
                 break;
             case PlayerState.SwimDown:
-                this.transform.DORotate(new Vector3(0, 135, 0), 0);
-                this.swimBehaviour.gameObject.SetActive(false);
-                this.ploufVFX.SetActive(false);
-                this.finsVFX.SetActive(false);
+                transform.DORotate(new Vector3(0, 135, 0), 0);
+                swimBehaviour.gameObject.SetActive(false);
+                ploufVFX.SetActive(false);
+                finsVFX.SetActive(false);
                 break;
             case PlayerState.Dig:
-                this.digBehaviour.enabled = false;
-                //todo autoclick
-                //if(this.autoclick != null) {
-                //    StopCoroutine(this.autoclick);
-                //}
+                digBehaviour.enabled = false;
                 break;
             case PlayerState.SwimBackUp:
 
@@ -182,38 +181,34 @@ public class PlayerBehaviour : MonoBehaviour {
         this.state = state;
         switch(state) {
             case PlayerState.Idle:
-                this.animator.SetTrigger("Idle");
-                this.gm.UI.ClickableArea.gameObject.SetActive(true);
-                this.gm.UI.ClickableArea.onClick.AddListener(() => this.animator.SetTrigger("Dive"));
+                animator.SetTrigger("Idle");
+                gm.UI.ClickableArea.gameObject.SetActive(true);
+                gm.UI.ClickableArea.onClick.AddListener(() => animator.SetTrigger("Dive"));
                 break;
             case PlayerState.SwimDown:
-                StartCoroutine(TimerBreath(this.breathTime));
-                this.swimBehaviour.gameObject.SetActive(true);
-                this.transform.DORotate(new Vector3(180, 135, 0), 0);
-                this.ploufVFX.SetActive(true);
-                this.bubblesVFX.SetActive(true);
-                this.finsVFX.SetActive(true);
+                StartCoroutine(TimerBreath(breathTime));
+                swimBehaviour.gameObject.SetActive(true);
+                transform.DORotate(new Vector3(180, 135, 0), 0);
+                ploufVFX.SetActive(true);
+                bubblesVFX.SetActive(true);
+                finsVFX.SetActive(true);
                 //todo correct audio manager
                 FindObjectOfType<AudioManager>().Play("Swim");
                 break;
             case PlayerState.Dig:
-                this.digBehaviour.enabled = true;
-                //todo autoclicker
-                //if(this.isAutoClicker) {
-                //    this.autoclick = StartCoroutine(AutoClick());
-                //}
+                digBehaviour.enabled = true;
                 break;
             case PlayerState.SwimBackUp:
                 //todo system to climb back to the surface
-                this.transform.DOMove(this.walkingPath.Waypoints[0], 2f).OnComplete(() => ChangeState(PlayerState.Walk)).SetEase(Ease.Linear);
-                this.transform.DOLookAt(this.walkingPath.Waypoints[0], .4f, AxisConstraint.Y);
-                this.finsVFX.SetActive(true);
-                this.bubblesVFX.SetActive(false);
+                transform.DOMove(walkingPath.WorldWaypoints[0], 2f).OnComplete(() => ChangeState(PlayerState.Walk)).SetEase(Ease.Linear);
+                transform.DOLookAt(walkingPath.WorldWaypoints[0], .4f, AxisConstraint.Y);
+                finsVFX.SetActive(true);
+                bubblesVFX.SetActive(false);
                 break;
             case PlayerState.Walk:
                 WalkAlongPath();
-                this.gm.Echelons.CheckEchelons();
-                this.finsVFX.SetActive(false);
+                gm.Echelons.CheckEchelons();
+                finsVFX.SetActive(false);
                 break;
             default:
                 break;
@@ -222,41 +217,45 @@ public class PlayerBehaviour : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         GameObject.Destroy(other.gameObject);
-        AddMoney(1 * this.gm.MoneyMultiplicator);
+        AddMoney(1 * gm.MoneyMultiplicator);
     }
 
-    public void ToggleAutoLock() {
-        SetAutoClicker(!this.isAutoClicker);
+
+
+    public void ImproveACFrequency() {
+        aCFrequency /= 2;
     }
 
-    public void SetAutoClicker(bool activate = false) {
-        this.isAutoClicker = activate;
-        if(this.state == PlayerState.Dig) {
-            if(activate) {
+    public void AddACDigDamage(int amount) {
+        aCDigDamage += amount;
+    }
 
-                this.autoclick = StartCoroutine(AutoClick());
-            } else {
-                StopCoroutine(this.autoclick);
-            }
+    public void ToggleAutoClick() {
+        if(isAutoCliker) {
+            DisableAutoclick();
+        } else {
+            EnableAutoclick();
         }
     }
 
-    public void SetAutoClicker(bool isActive = false, int digDamageToAdd = 0, bool improveFrequency = false) {
-        this.isAutoClicker = isActive;
-        this.autoClickerDigDamage += digDamageToAdd;
-        this.autoClickerFrequency /= improveFrequency ? 2 : 1;
-        if(this.state == PlayerState.Dig) {
-            this.autoclick = StartCoroutine(AutoClick());
+    [ContextMenu("Enable AC")]
+    public void EnableAutoclick() {
+        if(digBehaviour.isActiveAndEnabled) {
+            digBehaviour.EnableAutoclick();
         }
-
+        gm.UI.ChangeText(gm.UI.Autoclick.GetComponentInChildren<TMPro.TextMeshProUGUI>(), "AutoClick On");
+        isAutoCliker = true;
     }
 
-    private IEnumerator AutoClick() {
-        while(true) {
-            yield return new WaitForSecondsRealtime(this.autoClickerFrequency);
-            Dig(this.autoClickerDigDamage);
+    [ContextMenu("Disable AC")]
+    public void DisableAutoclick() {
+        if(digBehaviour.isActiveAndEnabled) {
+            digBehaviour.DisableAutoclick();
         }
+        gm.UI.ChangeText(gm.UI.Autoclick.GetComponentInChildren<TMPro.TextMeshProUGUI>(), "AutoClick Off");
+        isAutoCliker = false;
     }
+
 
     private Animator animator;
     private PlayerState state = PlayerState.Dig;
@@ -265,9 +264,8 @@ public class PlayerBehaviour : MonoBehaviour {
     private GameManager gm;
     private int dugLayers;
     private GameObject ploufVFX, bubblesVFX, finsVFX;
+    private bool isAutoCliker = false;
 
-    //autoclicker fields
-    private Coroutine autoclick;
 
 }
 public enum PlayerState { Idle, SwimDown, Dig, SwimBackUp, Walk }

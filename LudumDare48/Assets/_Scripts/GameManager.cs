@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
@@ -38,8 +39,8 @@ public class GameManager : MonoBehaviour {
 #endif
     }
 
-    public void Dig() {
-        this.player.Dig();
+    public void Dig(int? dmg = null) {
+        this.player.Dig(dmg != null ? null : dmg);
         this.layerGo.transform.eulerAngles += Vector3.up * 90;
     }
 
@@ -65,13 +66,22 @@ public class GameManager : MonoBehaviour {
                     this.player.AddDigDamage(stats.Amount);
                     break;
                 case BonusTypes.AutoClicksDamage:
-                    this.player.SetAutoClicker(false, stats.Amount);
+                    this.player.AddACDigDamage(stats.Amount);
                     break;
                 case BonusTypes.AutoClickFrequency:
-                    this.player.SetAutoClicker(false, 0, true);
+                    this.player.ImproveACFrequency();
                     break;
                 case BonusTypes.SwimSpeed:
                     this.player.AddSwimSpeed(stats.Amount);
+                    break;
+                case BonusTypes.UnlockAutoClick:
+                    this.ui.BuyAC.GetComponent<StoreElement>().Disable();
+                    this.ui.Autoclick.SetActive(true);
+                    print(this.ui.Autoclick.GetComponentInChildren<Button>().gameObject.name);
+                    this.ui.Autoclick.GetComponentInChildren<Button>().onClick.AddListener(() => this.player.ToggleAutoClick());
+                    foreach(GameObject parameter in this.ui.ACParameters) {
+                        parameter.SetActive(true);
+                    }
                     break;
                 default:
                     break;
