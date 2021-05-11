@@ -2,16 +2,16 @@
 using UnityEngine;
 
 [CustomEditor(typeof(PoolDepthBehaviour))]
-public class PoolDepthEditor : Editor {
+public class PoolDepthEditor : Etienne.Editor<PoolDepthBehaviour> {
     private SerializedProperty poolDepth, depth, layers;
     private int layerAmount;
 
 
     private void Init() {
-        this.poolDepth = this.serializedObject.FindProperty("poolDepth");
+        poolDepth = serializedObject.FindProperty("poolDepth");
 
-        this.depth = this.serializedObject.FindProperty("depth");
-        this.layers = this.serializedObject.FindProperty("layers");
+        depth = serializedObject.FindProperty("depth");
+        layers = serializedObject.FindProperty("layers");
     }
     private void OnValidate() {
         Init();
@@ -30,7 +30,7 @@ public class PoolDepthEditor : Editor {
         }
         GUILayout.BeginHorizontal();
         EditorGUILayout.PrefixLabel("Layer Amount");
-        this.layerAmount = EditorGUILayout.IntSlider(this.layerAmount, 0, 20);
+        layerAmount = EditorGUILayout.IntSlider(layerAmount, 0, 20);
         GUILayout.EndHorizontal();
         base.OnInspectorGUI();
     }
@@ -41,21 +41,20 @@ public class PoolDepthEditor : Editor {
     }
 
     private void HandleLayerAmount() {
-        GameObject layersGo = (GameObject)this.layers.objectReferenceValue;
+        GameObject layersGo = layers.objectReferenceValue as GameObject;
         int currentLayerAmount = layersGo.transform.childCount;
-        Debug.Log($"child count : {currentLayerAmount} target layer amount : {this.layerAmount}");
-        if(this.layerAmount != currentLayerAmount) {
+        Debug.Log($"child count : {currentLayerAmount} target layer amount : {layerAmount}");
+        if(layerAmount != currentLayerAmount) {
             GameObject layerPrefab = Resources.Load("Prefabs/Gameplay/Layer") as GameObject;
-            PoolDepthBehaviour pool = (PoolDepthBehaviour)this.target;
-            while(this.layerAmount > currentLayerAmount) {
+            while(layerAmount > currentLayerAmount) {
                 GameObject layer = GameObject.Instantiate(layerPrefab, layersGo.transform, false);
                 layer.transform.localPosition = new Vector3(0, -currentLayerAmount, 0);
                 foreach(Transform quad in layer.transform) {
-                    quad.GetComponent<MeshRenderer>().material = pool.GetMaterial(currentLayerAmount);
+                    quad.GetComponent<MeshRenderer>().material = Target.GetMaterial(currentLayerAmount);
                 }
                 currentLayerAmount++;
             }
-            while(this.layerAmount < currentLayerAmount) {
+            while(layerAmount < currentLayerAmount) {
                 GameObject.DestroyImmediate(layersGo.transform.GetChild(currentLayerAmount - 1).gameObject);
                 currentLayerAmount--;
             }
@@ -63,14 +62,14 @@ public class PoolDepthEditor : Editor {
     }
 
     private void HandlePoolDepth() {
-        GameObject depthGo = (GameObject)this.depth.objectReferenceValue;
+        GameObject depthGo = (GameObject)depth.objectReferenceValue;
         if(depthGo != null) {
-            depthGo.transform.Find("WaterTop").gameObject.SetActive(this.poolDepth.intValue > 0);
-            depthGo.transform.localScale = new Vector3(depthGo.transform.localScale.x, Mathf.Max(.001f, this.poolDepth.intValue), depthGo.transform.localScale.z);
-            GameObject layersGo = (GameObject)this.layers.objectReferenceValue;
+            depthGo.transform.Find("WaterTop").gameObject.SetActive(poolDepth.intValue > 0);
+            depthGo.transform.localScale = new Vector3(depthGo.transform.localScale.x, Mathf.Max(.001f, poolDepth.intValue), depthGo.transform.localScale.z);
+            GameObject layersGo = (GameObject)layers.objectReferenceValue;
             if(layersGo != null) {
 
-                layersGo.transform.position = new Vector3(layersGo.transform.position.x, -this.poolDepth.intValue, layersGo.transform.position.z);
+                layersGo.transform.position = new Vector3(layersGo.transform.position.x, -poolDepth.intValue, layersGo.transform.position.z);
             } else {
                 Debug.LogError("Layers GameObject is not set");
             }

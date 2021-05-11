@@ -2,12 +2,10 @@
 using UnityEngine;
 
 [CustomEditor(typeof(PlayerBehaviour))]
-public class PlayerBehaviourEditor : Editor {
-    private PlayerBehaviour player;
+public class PlayerBehaviourEditor : Etienne.Editor<PlayerBehaviour> {
     private void OnSceneGUI() {
-        this.player = this.target as PlayerBehaviour;
         Handles.DrawAAPolyLine(new Vector3[2] {
-            this.player.transform.position,this.player.transform.position+this.player.transform.forward
+            Target.transform.position,Target.transform.position+Target.transform.forward
         });
     }
 }

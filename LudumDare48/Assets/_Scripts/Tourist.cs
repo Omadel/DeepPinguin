@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class Tourist : MonoBehaviour {
-    [SerializeField] private WalkingPath walkingPath = null;
+    [SerializeField] private Etienne.Path walkingPath = null;
 
     [SerializeField] private float pathDuration = 20f;
     [SerializeField] private PathType pathType = PathType.Linear;
@@ -17,16 +17,16 @@ public class Tourist : MonoBehaviour {
     [SerializeField] private float lookAhead = .1f;
 
     private void Start() {
-        if(this.walkingPath == null) {
+        if(walkingPath == null) {
             return;
         }
-        this.path = this.walkingPath.Waypoints;
-        this.transform.DOPath(this.path, this.pathDuration, this.pathType, this.pathMode)
-            .SetLoops(this.loops, this.pathLoopType)
-            .SetEase(this.pathEase)
-            .SetLookAt(this.lookAhead)
+        path = walkingPath.WorldWaypoints;
+        transform.DOPath(path, pathDuration, pathType, pathMode)
+            .SetLoops(loops, pathLoopType)
+            .SetEase(pathEase)
+            .SetLookAt(lookAhead)
             ;
-        GameObject.Destroy(this.walkingPath.gameObject);
+        GameObject.Destroy(walkingPath.gameObject);
     }
 
     private Vector3[] path;
