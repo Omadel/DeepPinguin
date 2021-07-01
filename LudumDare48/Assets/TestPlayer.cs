@@ -17,26 +17,26 @@ public class TestPlayer : MonoBehaviour {
 
     private IEnumerator bonjour() {
         while(true) {
-            float tmp = Random.Range(this.range.x, this.range.y);
-            this.spawnPos = new Vector3(tmp, 0, -(this.range.y + this.range.x - tmp));
+            float tmp = Random.Range(range.x, range.y);
+            spawnPos = new Vector3(tmp, 0, -(range.y + range.x - tmp));
 
-            yield return new WaitForSecondsRealtime(this.refresh);
+            yield return new WaitForSecondsRealtime(refresh);
         }
 
     }
     private void OnDrawGizmos() {
-        Gizmos.DrawSphere(new Vector3(this.spawnPos.x, 0, this.spawnPos.z), 1);
+        Gizmos.DrawSphere(new Vector3(spawnPos.x, 0, spawnPos.z), 1);
     }
     // Update is called once per frame
     private void Update() {
         if(Input.GetKey(KeyCode.Space) || Input.touchCount > 0) {
-            this.text.text = (int.Parse(this.text.text) + 1).ToString();
-            this.text.transform.DOComplete();
-            this.text.DOComplete();
-            this.text.transform.DOShakePosition(.3f, 3f);
-            this.text.transform.DOShakeRotation(.3f, 3f);
-            this.text.transform.DOPunchScale(Vector3.one * .2f, .3f);
-            this.text.DOColor(Color.grey, .1f).SetLoops(2, LoopType.Yoyo);
+            text.text = (int.Parse(text.text) + 1).ToString();
+            text.transform.DOComplete();
+            text.DOComplete();
+            text.transform.DOShakePosition(.3f, 3f);
+            text.transform.DOShakeRotation(.3f, 3f);
+            text.transform.DOPunchScale(Vector3.one * .2f, .3f);
+            text.DOColor(Color.grey, .1f).SetLoops(2, LoopType.Yoyo);
 
 
         }
